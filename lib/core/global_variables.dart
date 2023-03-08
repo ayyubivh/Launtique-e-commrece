@@ -4,8 +4,8 @@ class GlobalVariables {
   // COLORS
   static const appBarGradient = LinearGradient(
     colors: [
-      Color.fromARGB(255, 29, 201, 192),
-      Color.fromARGB(255, 125, 221, 216),
+      Color.fromARGB(255, 222, 225, 225),
+      Color.fromARGB(255, 254, 254, 254),
     ],
     stops: [0.5, 1.0],
   );
@@ -43,7 +43,7 @@ class GlobalVariables {
       'image': 'assets/images/c3.jpg',
     },
     {
-      'title': 'Accessories',
+      'title': 'Trending',
       'image': 'assets/images/c2.jpg',
     },
   ];

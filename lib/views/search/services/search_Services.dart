@@ -8,7 +8,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import '../../../models/product.dart';
-import '../../../providers/user_provider.dart';
 
 class SearchServices {
   Future<List<Product>> fetchSearchedProduct({
