@@ -204,11 +204,11 @@ class AdminServices {
           var response = jsonDecode(res.body);
           totalEarning = response['totalEarnings'];
           sales = [
-            Sales('Mobiles', response['mobileEarnings']),
-            Sales('Essentials', response['essentialEarnings']),
-            Sales('Books', response['booksEarnings']),
-            Sales('Appliances', response['applianceEarnings']),
-            Sales('Fashion', response['fashionEarnings']),
+            Sales('MENS', response['mobileEarnings']),
+            Sales('WOMENS', response['essentialEarnings']),
+            Sales('KIDS', response['booksEarnings']),
+            Sales('SHOES', response['applianceEarnings']),
+            Sales('ACCESSORIES', response['fashionEarnings']),
           ];
         },
       );

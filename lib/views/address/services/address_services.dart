@@ -4,7 +4,6 @@ import 'package:e_shoppie/core/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-
 import '../../../core/url.dart';
 import '../../../models/product.dart';
 import '../../../models/user.dart';

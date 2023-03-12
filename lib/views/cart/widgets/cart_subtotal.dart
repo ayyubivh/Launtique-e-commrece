@@ -1,3 +1,4 @@
+import 'package:e_shoppie/core/sizedboxes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,18 +19,25 @@ class CartSubtotal extends StatelessWidget {
       margin: const EdgeInsets.all(10),
       child: Row(
         children: [
-          const Text(
-            'Subtotal ',
-            style: TextStyle(
-              fontSize: 20,
-            ),
-          ),
-          Text(
-            '\$$sum',
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+          Column(
+            children: [
+              const Text(
+                'Total ',
+                style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black54,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 0.6),
+              ),
+              kHeight5,
+              Text(
+                '\$ $sum.00',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ),
         ],
       ),

@@ -78,11 +78,11 @@ adminRouter.get("/admin/analytics", admin, async (req, res) => {
       }
     }
     // CATEGORY WISE ORDER FETCHING
-    let mobileEarnings = await fetchCategoryWiseProduct("Mobiles");
-    let essentialEarnings = await fetchCategoryWiseProduct("Essentials");
-    let applianceEarnings = await fetchCategoryWiseProduct("Appliances");
-    let booksEarnings = await fetchCategoryWiseProduct("Books");
-    let fashionEarnings = await fetchCategoryWiseProduct("Fashion");
+    let mobileEarnings = await fetchCategoryWiseProduct("MENS");
+    let essentialEarnings = await fetchCategoryWiseProduct("WOMENS");
+    let applianceEarnings = await fetchCategoryWiseProduct("KIDS");
+    let booksEarnings = await fetchCategoryWiseProduct("SHOES");
+    let fashionEarnings = await fetchCategoryWiseProduct("ACCESSORIES");
 
     let earnings = {
       totalEarnings,
@@ -115,5 +115,4 @@ async function fetchCategoryWiseProduct(category) {
   return earnings;
 }
 
-
-module.exports = adminRouter; 
+module.exports = adminRouter;

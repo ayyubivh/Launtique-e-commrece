@@ -1,3 +1,4 @@
+import 'package:e_shoppie/core/colors.dart';
 import 'package:flutter/material.dart';
 import '../../../core/global_variables.dart';
 import '../screens/category_deals.dart';
@@ -12,40 +13,64 @@ class TopCategories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 80,
+    final Size size = MediaQuery.of(context).size;
+    return SingleChildScrollView(
       child: ListView.builder(
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        // scrollDirection: Axis.vertical,
         itemCount: GlobalVariables.categoryImages.length,
-        scrollDirection: Axis.horizontal,
-        itemExtent: 75,
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () => navigateToCategoryPage(
               context,
               GlobalVariables.categoryImages[index]['title']!,
             ),
-            child: Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(50),
-                    child: Image.asset(
-                      GlobalVariables.categoryImages[index]['image']!,
-                      fit: BoxFit.cover,
-                      height: 60,
-                      width: 60,
+            child: Container(
+              height: 170,
+              padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 4),
+              child: Stack(
+                children: [
+                  // ClipRRect(
+                  //   borderRadius: BorderRadius.circular(20),
+                  //   child: Image.asset(
+                  //     GlobalVariables.categoryImages[index]['image']!,
+                  //     fit: BoxFit.cover,
+                  //     // height: 60,
+                  //     width: size.width,
+                  //     colorBlendMode: BlendMode.colorBurn,
+                  //   ),
+                  // ),
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        image: DecorationImage(
+                          image: AssetImage(
+                            GlobalVariables.categoryImages[index]['image']!,
+                          ),
+                          fit: BoxFit.cover,
+                          // colorFilter: ColorFilter.mode(
+                          //   Colors.black26,
+                          //   BlendMode.darken,
+                          // ),
+                        )),
+                  ),
+                  Positioned(
+                    left: 10,
+                    right: 10,
+                    bottom: 10,
+                    child: Text(
+                      "${GlobalVariables.categoryImages[index]['title']}",
+                      style: TextStyle(
+                          color: kwhite,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Lato',
+                          letterSpacing: 1),
                     ),
-                  ),
-                ),
-                Text(
-                  GlobalVariables.categoryImages[index]['title']!,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ],
+                  )
+                ],
+              ),
             ),
           );
         },

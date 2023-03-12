@@ -1,7 +1,6 @@
+import 'package:e_shoppie/core/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../../core/global_variables.dart';
 import '../../../providers/user_provider.dart';
 
 class BelowAppBar extends StatelessWidget {
@@ -12,9 +11,7 @@ class BelowAppBar extends StatelessWidget {
     final user = Provider.of<UserProvider>(context).user;
 
     return Container(
-      decoration: const BoxDecoration(
-        gradient: GlobalVariables.appBarGradient,
-      ),
+      color: kwhite,
       padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
       child: Row(
         children: [

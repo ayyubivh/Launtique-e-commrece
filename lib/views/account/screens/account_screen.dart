@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../core/global_variables.dart';
 import '../widgets/below_app_bar.dart';
 import '../widgets/orders.dart';
@@ -11,34 +10,24 @@ class AccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Container(),
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(50),
+        preferredSize: const Size.fromHeight(40),
         child: AppBar(
+          iconTheme: const IconThemeData(color: Colors.blueGrey),
+          backgroundColor: GlobalVariables.appBarColor,
           elevation: 0,
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              gradient: GlobalVariables.appBarGradient,
+          title: const Text(
+            'LAUNTIQUE',
+            style: TextStyle(
+              color: Colors.blueGrey,
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Lato',
+              letterSpacing: 1,
             ),
           ),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                padding: const EdgeInsets.only(left: 15, right: 15),
-                child: Row(
-                  children: const [
-                    Padding(
-                      padding: EdgeInsets.only(right: 15),
-                      child: Icon(Icons.notifications_outlined),
-                    ),
-                    Icon(
-                      Icons.search,
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
+          centerTitle: true,
         ),
       ),
       body: Column(

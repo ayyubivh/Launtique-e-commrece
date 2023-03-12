@@ -21,8 +21,14 @@ class CarouselImage extends StatelessWidget {
         },
       ).toList(),
       options: CarouselOptions(
-        viewportFraction: 1,
+        viewportFraction: 0.9,
         height: 200,
+        enlargeCenterPage: true,
+        autoPlay: true,
+        aspectRatio: 16 / 9,
+        autoPlayCurve: Curves.fastOutSlowIn,
+        enableInfiniteScroll: true,
+        autoPlayAnimationDuration: Duration(milliseconds: 800),
       ),
     );
   }

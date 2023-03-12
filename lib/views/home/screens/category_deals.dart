@@ -1,8 +1,14 @@
+import 'dart:math';
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_shoppie/core/colors.dart';
+import 'package:e_shoppie/core/sizedboxes.dart';
+import 'package:e_shoppie/views/product_details/screen/product_details.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import '../../../common/loader.dart';
 import '../../../core/global_variables.dart';
 import '../../../models/product.dart';
-import '../../product_details/screen/product_details.dart';
 import '../services/home_services.dart';
 
 class CategoryDealsScreen extends StatefulWidget {
@@ -39,99 +45,132 @@ class _CategoryDealsScreenState extends State<CategoryDealsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(50),
+        preferredSize: const Size.fromHeight(40),
         child: AppBar(
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              gradient: GlobalVariables.appBarGradient,
+          iconTheme: const IconThemeData(color: Colors.blueGrey),
+          backgroundColor: GlobalVariables.appBarColor,
+          elevation: 0,
+          title: const Text(
+            'LAUNTIQUE',
+            style: TextStyle(
+              color: Colors.blueGrey,
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Lato',
+              letterSpacing: 1,
             ),
           ),
-          title: Text(
-            widget.category,
-            style: const TextStyle(
-              color: Colors.black,
-            ),
-          ),
+          centerTitle: true,
         ),
       ),
       body: productList == null
           ? const Loader()
-          : Column(
+          : SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      'Keep shopping for ${widget.category}',
+                      style: const TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  MasonryGridView.count(
+                    mainAxisSpacing: 15,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 15,
+                    itemCount: productList!.length,
+                    itemBuilder: (context, index) {
+                      final product = productList![index];
+                      return singleItemWidget(product,
+                          index == productList!.length - 1 ? true : false);
+                    },
+                  )
+                ],
+              ),
+            ),
+    );
+  }
+
+  Widget singleItemWidget(Product product, bool last) {
+    return GestureDetector(
+      onTap: () => Navigator.pushNamed(context, ProductDetailScreen.routeName,
+          arguments: product),
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(bottom: 10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(0.28),
+              color: kwhite,
+              boxShadow: [
+                BoxShadow(
+                  color: kblack.withOpacity(0.3),
+                  blurRadius: 2,
+                  spreadRadius: 1,
+                  offset: const Offset(3, 3),
+                )
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  alignment: Alignment.topLeft,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(0.28),
+                  child: Image.network(
+                    product.images[0],
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 8.0,
+                    right: 8.0,
+                    top: 10.0,
+                  ),
                   child: Text(
-                    'Keep shopping for ${widget.category}',
+                    product.name.toUpperCase(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black54,
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 170,
-                  child: GridView.builder(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.only(left: 15),
-                    itemCount: productList!.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 1,
-                      childAspectRatio: 1.4,
-                      mainAxisSpacing: 10,
+                kHeight5,
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 8.0,
+                    right: 8.0,
+                  ),
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    height: 24,
+                    color: GlobalVariables.appBarColor,
+                    child: Text(
+                      "\$ ${product.price}",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    itemBuilder: (context, index) {
-                      final product = productList![index];
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            ProductDetailScreen.routeName,
-                            arguments: product,
-                          );
-                        },
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 130,
-                              child: DecoratedBox(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.black12,
-                                    width: 0.5,
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: Image.network(
-                                    product.images[0],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              alignment: Alignment.topLeft,
-                              padding: const EdgeInsets.only(
-                                left: 0,
-                                top: 5,
-                                right: 15,
-                              ),
-                              child: Text(
-                                product.name,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
                   ),
                 ),
               ],
             ),
+          )
+        ],
+      ),
     );
   }
 }

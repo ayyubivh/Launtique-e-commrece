@@ -1,3 +1,5 @@
+import 'package:e_shoppie/core/colors.dart';
+import 'package:e_shoppie/core/sizedboxes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -45,18 +47,29 @@ class _CartProductState extends State<CartProduct> {
     return Column(
       children: [
         Container(
-          margin: const EdgeInsets.symmetric(
-            horizontal: 10,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: kwhite,
+          ),
+          height: 100,
+          padding: const EdgeInsets.only(
+            top: 3,
+            left: 5,
+            bottom: 4,
           ),
           child: Row(
             children: [
-              Image.network(
-                product.images[0],
-                fit: BoxFit.contain,
-                height: 135,
-                width: 135,
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.network(
+                  product.images[0],
+                  fit: BoxFit.cover,
+                  height: 95,
+                  width: 90,
+                ),
               ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     width: 235,
@@ -64,31 +77,19 @@ class _CartProductState extends State<CartProduct> {
                     child: Text(
                       product.name,
                       style: const TextStyle(
-                        fontSize: 16,
-                      ),
+                          fontSize: 15, fontWeight: FontWeight.bold),
                       maxLines: 2,
                     ),
                   ),
+                  kHeight10,
+                  // Container(
+                  //   width: 235,
+                  //   padding: const EdgeInsets.only(left: 10),
+                  //   child: const Text('Eligible for FREE Shipping'),
+                  // ),
+
                   Container(
-                    width: 235,
-                    padding: const EdgeInsets.only(left: 10, top: 5),
-                    child: Text(
-                      '\$${product.price}',
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      maxLines: 2,
-                    ),
-                  ),
-                  Container(
-                    width: 235,
                     padding: const EdgeInsets.only(left: 10),
-                    child: const Text('Eligible for FREE Shipping'),
-                  ),
-                  Container(
-                    width: 235,
-                    padding: const EdgeInsets.only(left: 10, top: 5),
                     child: const Text(
                       'In Stock',
                       style: TextStyle(
@@ -97,68 +98,59 @@ class _CartProductState extends State<CartProduct> {
                       maxLines: 2,
                     ),
                   ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        Container(
-          margin: const EdgeInsets.all(10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.black12,
-                    width: 1.5,
-                  ),
-                  borderRadius: BorderRadius.circular(5),
-                  color: Colors.black12,
-                ),
-                child: Row(
-                  children: [
-                    InkWell(
-                      onTap: () => decreaseQuantity(product),
-                      child: Container(
-                        width: 35,
-                        height: 32,
-                        alignment: Alignment.center,
-                        child: const Icon(
-                          Icons.remove,
-                          size: 18,
-                        ),
-                      ),
-                    ),
-                    DecoratedBox(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black12, width: 1.5),
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(0),
-                      ),
-                      child: Container(
-                        width: 35,
-                        height: 32,
-                        alignment: Alignment.center,
+
+                  Row(
+                    children: [
+                      Container(
+                        width: 200,
+                        padding: const EdgeInsets.only(left: 10, top: 5),
                         child: Text(
-                          quantity.toString(),
+                          '\$${product.price}',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          maxLines: 2,
                         ),
                       ),
-                    ),
-                    InkWell(
-                      onTap: () => increaseQuantity(product),
-                      child: Container(
-                        width: 35,
-                        height: 32,
-                        alignment: Alignment.center,
-                        child: const Icon(
-                          Icons.add,
-                          size: 18,
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Colors.grey[300],
+                        ),
+                        height: 30,
+                        width: 60,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            InkWell(
+                              onTap: () => decreaseQuantity(product),
+                              child: Container(
+                                width: 16,
+                                height: 22,
+                                alignment: Alignment.center,
+                                child: const Icon(
+                                  Icons.remove,
+                                  size: 18,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              quantity.toString(),
+                            ),
+                            InkWell(
+                              onTap: () => increaseQuantity(product),
+                              child: const Icon(
+                                Icons.add,
+                                size: 18,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
+                ],
               ),
             ],
           ),

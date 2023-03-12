@@ -34,11 +34,7 @@ class _AdminScreenState extends State<AdminScreen> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50),
         child: AppBar(
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              gradient: GlobalVariables.appBarGradient,
-            ),
-          ),
+          backgroundColor: GlobalVariables.appBarColor,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [

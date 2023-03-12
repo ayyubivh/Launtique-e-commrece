@@ -23,7 +23,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final TextEditingController quantityController = TextEditingController();
   final AdminServices adminServices = AdminServices();
 
-  String category = 'Men';
+  String category = 'MENS';
   List<File> images = [];
   final _addProductFormKey = GlobalKey<FormState>();
 
@@ -37,11 +37,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
   }
 
   List<String> productCategories = [
-    'Men',
-    'Women',
-    'Kids',
-    'Footwear',
-    'Accessories'
+    'MENS',
+    'WOMENS',
+    'KIDS',
+    'SHOES',
+    'ACCESSORIES'
   ];
 
   void sellProduct() {
@@ -68,15 +68,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50),
         child: AppBar(
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              gradient: GlobalVariables.appBarGradient,
-            ),
-          ),
+          backgroundColor: GlobalVariables.appBarColor,
           title: const Text(
             'Add Product',
             style: TextStyle(

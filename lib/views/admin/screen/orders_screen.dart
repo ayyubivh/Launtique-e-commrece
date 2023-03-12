@@ -34,7 +34,7 @@ class _OrderedScreenState extends State<OrderedScreen> {
         ? const Loader()
         : GridView.builder(
             gridDelegate:
-                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
             itemCount: orders!.length,
             itemBuilder: (context, index) {
               final orderData = orders![index];

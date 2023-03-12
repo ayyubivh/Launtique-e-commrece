@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:badges/badges.dart';
+import 'package:e_shoppie/core/colors.dart';
 import 'package:e_shoppie/views/cart/screens/cart_screens.dart';
 import 'package:e_shoppie/providers/user_provider.dart';
 import 'package:flutter/material.dart';
@@ -36,61 +37,39 @@ class _BottomBarState extends State<BottomBar> {
     final userCartLen = context.watch<UserProvider>().user.cart.length;
     return Scaffold(
         body: pages[_page],
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _page,
-          selectedItemColor: GlobalVariables.selectedNavBarColor,
-          unselectedItemColor: GlobalVariables.unselectedNavBarColor,
-          backgroundColor: GlobalVariables.backgroundColor,
-          iconSize: 28,
-          onTap: updatePage,
-          items: [
-            BottomNavigationBarItem(
-                icon: Container(
-                  width: bottomBarwidth,
-                  decoration: BoxDecoration(
-                      border: Border(
-                          top: BorderSide(
-                              width: bottomBarBorderWidth,
-                              color: _page == 0
-                                  ? GlobalVariables.selectedNavBarColor
-                                  : GlobalVariables.backgroundColor))),
-                  child: const Icon(Icons.home),
-                ),
-                label: ''),
-            BottomNavigationBarItem(
-                icon: Container(
-                  width: bottomBarwidth,
-                  decoration: BoxDecoration(
-                      border: Border(
-                          top: BorderSide(
-                              width: bottomBarBorderWidth,
-                              color: _page == 1
-                                  ? GlobalVariables.selectedNavBarColor
-                                  : GlobalVariables.backgroundColor))),
-                  child: const Icon(Icons.person),
-                ),
-                label: ''),
-            BottomNavigationBarItem(
-                icon: Container(
-                  width: bottomBarwidth,
-                  decoration: BoxDecoration(
-                      border: Border(
-                          top: BorderSide(
-                              width: bottomBarBorderWidth,
-                              color: _page == 2
-                                  ? GlobalVariables.selectedNavBarColor
-                                  : GlobalVariables.backgroundColor))),
-                  child: badges.Badge(
-                    badgeStyle: const BadgeStyle(
-                      badgeColor: Colors.white,
-                      elevation: 0,
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.all(9.9),
+          child: Container(
+            height: 58,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(40),
+              color: Colors.black.withOpacity(0.8),
+            ),
+            child: BottomNavigationBar(
+              currentIndex: _page,
+              selectedItemColor: Colors.white,
+              unselectedItemColor: Colors.grey,
+              backgroundColor: Colors.transparent,
+              iconSize: 28,
+              onTap: updatePage,
+              items: [
+                const BottomNavigationBarItem(
+                    icon: Icon(Icons.home), label: ''),
+                const BottomNavigationBarItem(
+                    icon: Icon(Icons.person), label: ''),
+                BottomNavigationBarItem(
+                    icon: badges.Badge(
+                      badgeStyle: const BadgeStyle(
+                        badgeColor: Colors.orangeAccent,
+                        elevation: 0,
+                      ),
+                      badgeContent: Text(userCartLen.toString()),
+                      child: const Icon(Icons.shopping_cart_outlined),
                     ),
-                    badgeContent: Text(userCartLen.toString()),
-                    child: const Icon(Icons.shopping_cart_outlined),
-                  ),
-                ),
-                label: '')
-          ],
+                    label: '')
+              ],
+            ),
+          ),
         ));
   }
 }

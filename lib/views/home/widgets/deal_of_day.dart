@@ -1,3 +1,4 @@
+import 'package:e_shoppie/core/sizedboxes.dart';
 import 'package:flutter/material.dart';
 import '../../../common/loader.dart';
 import '../../../models/product.dart';
@@ -49,19 +50,24 @@ class _DealOfDayState extends State<DealOfDay> {
                       padding: const EdgeInsets.only(left: 10, top: 15),
                       child: const Text(
                         'Deal of the day',
-                        style: TextStyle(fontSize: 20),
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
+                    kHeight10,
                     Image.network(
                       product!.images[0],
                       height: 235,
-                      fit: BoxFit.fitHeight,
+                      width: MediaQuery.of(context).size.width / 1.2,
+                      fit: BoxFit.cover,
                     ),
                     Container(
                       padding: const EdgeInsets.only(left: 15),
                       alignment: Alignment.topLeft,
-                      child: const Text(
-                        '\$100',
+                      child: Text(
+                        '${product!.price}',
                         style: TextStyle(fontSize: 18),
                       ),
                     ),
@@ -69,8 +75,8 @@ class _DealOfDayState extends State<DealOfDay> {
                       alignment: Alignment.topLeft,
                       padding:
                           const EdgeInsets.only(left: 15, top: 5, right: 40),
-                      child: const Text(
-                        'Rivaan',
+                      child: Text(
+                        '${product!.name}',
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -81,11 +87,14 @@ class _DealOfDayState extends State<DealOfDay> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: product!.images
                             .map(
-                              (e) => Image.network(
-                                e,
-                                fit: BoxFit.fitWidth,
-                                width: 100,
-                                height: 100,
+                              (e) => Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Image.network(
+                                  e,
+                                  fit: BoxFit.cover,
+                                  width: 100,
+                                  height: 100,
+                                ),
                               ),
                             )
                             .toList(),

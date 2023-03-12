@@ -1,7 +1,9 @@
+import 'package:e_shoppie/common/custom_button.dart';
 import 'package:e_shoppie/core/global_variables.dart';
 import 'package:e_shoppie/core/sizedboxes.dart';
 import 'package:e_shoppie/core/utils.dart';
 import 'package:e_shoppie/providers/user_provider.dart';
+import 'package:e_shoppie/views/home/widgets/addres_box.dart';
 import 'package:flutter/material.dart';
 import 'package:pay/pay.dart';
 import 'package:provider/provider.dart';
@@ -66,7 +68,6 @@ class _AddrresscreenState extends State<Addrresscreen> {
   }
 }''';
 
-  // String defaultGooglePay;
   @override
   void dispose() {
     super.dispose();
@@ -76,19 +77,6 @@ class _AddrresscreenState extends State<Addrresscreen> {
     cityController.dispose();
   }
 
-  // void onGooglePayResult(res) {
-  //   if (Provider.of<UserProvider>(context, listen: false)
-  //       .user
-  //       .address
-  //       .isEmpty) {
-  //     addressServies.saveUserAddress(
-  //         context: context, address: addressToBeUsed);
-  //   }
-  //   addressServies.placeOrder(
-  //       context: context,
-  //       address: addressToBeUsed,
-  //       totalSum: double.parse(widget.totalAmount));
-  // }
   void onGooglePayResult(res) {
     if (Provider.of<UserProvider>(context, listen: false)
         .user
@@ -141,13 +129,9 @@ class _AddrresscreenState extends State<Addrresscreen> {
   Widget build(BuildContext context) {
     var address = context.watch<UserProvider>().user.address;
     return Scaffold(
-        backgroundColor: kwhite.withOpacity(0.2),
+        // backgroundColor: kwhite.withOpacity(0.2),
         appBar: AppBar(
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              gradient: GlobalVariables.appBarGradient,
-            ),
-          ),
+          backgroundColor: GlobalVariables.appBarColor,
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -164,24 +148,19 @@ class _AddrresscreenState extends State<Addrresscreen> {
                             color: Colors.black12,
                           ),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            address,
-                            style: const TextStyle(
-                              fontSize: 18,
-                            ),
-                          ),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: AddressBox(),
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 15),
                       const Text(
                         'OR',
                         style: TextStyle(
                           fontSize: 18,
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 15),
                     ],
                   ),
                 Form(
@@ -212,21 +191,6 @@ class _AddrresscreenState extends State<Addrresscreen> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                // GooglePayButton(
-                //   onPressed: () => payPressed(address),
-                //   // paymentConfigurationAsset: 'gpay.json',
-                //   paymentConfiguration:
-                //       // PaymentConfiguration.fromJsonString(defaultGooglePay),
-                //   onPaymentResult: onGooglePayResult,
-                //   paymentItems: paymentItems,
-                //   height: 50,
-                //   // style: GooglePayButtonStyle.black,
-                //   type: GooglePayButtonType.buy,
-                //   margin: const EdgeInsets.only(top: 15),
-                //   loadingIndicator: const Center(
-                // child: CircularProgressIndicator(),
-                // ),
-                // ),
                 GooglePayButton(
                   type: GooglePayButtonType.buy,
                   width: double.infinity,
@@ -241,22 +205,10 @@ class _AddrresscreenState extends State<Addrresscreen> {
                   onPressed: () => payPressed(address),
                 ),
                 kHeight10,
-                InkWell(
-                  child: Container(
-                    color: kwhite,
-                    height: 50,
-                    width: double.infinity,
-                    child: Center(
-                      child: Text(
-                        'cash on delivery',
-                        style: TextStyle(fontSize: 24),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                  onTap: () {
-                    payPressed(address);
-                  },
+                CustomButton(
+                  text: 'Cash On Delivery',
+                  onTap: () => payPressed(address),
+                  color: Colors.black,
                 )
               ],
             ),
