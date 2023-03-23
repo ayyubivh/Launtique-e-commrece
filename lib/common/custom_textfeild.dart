@@ -1,3 +1,5 @@
+import 'package:e_shoppie/core/colors.dart';
+import 'package:e_shoppie/core/global_variables.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -23,7 +25,7 @@ class CustomTextField extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: TextFormField(
         controller: controller,
-        style: const TextStyle(color: Colors.green),
+        style: TextStyle(color: GlobalVariables.primaryColor),
         decoration: InputDecoration(
           hintStyle: const TextStyle(
             color: Colors.black38,
@@ -32,10 +34,17 @@ class CustomTextField extends StatelessWidget {
           hintText: hinTtext,
           suffixIcon: suffix,
           border: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(12)),
-              borderSide: BorderSide(color: Colors.amber, width: 4)),
+            borderRadius: BorderRadius.all(
+              Radius.circular(12),
+            ),
+          ),
           enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.green, width: 2),
+              borderSide:
+                  BorderSide(color: GlobalVariables.primaryColor, width: 2),
+              borderRadius: BorderRadius.circular(15)),
+          focusedBorder: OutlineInputBorder(
+              borderSide:
+                  BorderSide(color: GlobalVariables.primaryColor, width: 2),
               borderRadius: BorderRadius.circular(15)),
         ),
         obscureText: pstext ?? false,

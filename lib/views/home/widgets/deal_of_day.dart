@@ -1,9 +1,9 @@
 import 'package:e_shoppie/core/sizedboxes.dart';
+import 'package:e_shoppie/providers/home/home_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../common/loader.dart';
-import '../../../models/product.dart';
 import '../../product_details/screen/product_details.dart';
-import '../services/home_services.dart';
 
 class DealOfDay extends StatefulWidget {
   const DealOfDay({Key? key}) : super(key: key);
@@ -13,107 +13,101 @@ class DealOfDay extends StatefulWidget {
 }
 
 class _DealOfDayState extends State<DealOfDay> {
-  Product? product;
-  final HomeServices homeServices = HomeServices();
-
   @override
   void initState() {
     super.initState();
-    fetchDealOfDay();
-  }
-
-  void fetchDealOfDay() async {
-    product = await homeServices.fetchDealOfDay(context: context);
-    setState(() {});
+    Provider.of<HomeProvider>(context, listen: false).fetchDealOfDay(context);
   }
 
   void navigateToDetailScreen() {
     Navigator.pushNamed(
       context,
       ProductDetailScreen.routeName,
-      arguments: product,
+      arguments: Provider.of<HomeProvider>(context, listen: false).product,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return product == null
-        ? const Loader()
-        : product!.name.isEmpty
-            ? const SizedBox()
-            : GestureDetector(
-                onTap: navigateToDetailScreen,
-                child: Column(
-                  children: [
-                    Container(
-                      alignment: Alignment.topLeft,
-                      padding: const EdgeInsets.only(left: 10, top: 15),
-                      child: const Text(
-                        'Deal of the day',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+    return Consumer<HomeProvider>(
+      builder: (context, value, child) => value.product == null
+          ? const Loader()
+          : value.product!.name.isEmpty
+              ? const SizedBox()
+              : GestureDetector(
+                  onTap: navigateToDetailScreen,
+                  child: Column(
+                    children: [
+                      Container(
+                        alignment: Alignment.topLeft,
+                        padding: const EdgeInsets.only(left: 10, top: 15),
+                        child: const Text(
+                          'Deal of the day',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                    kHeight10,
-                    Image.network(
-                      product!.images[0],
-                      height: 235,
-                      width: MediaQuery.of(context).size.width / 1.2,
-                      fit: BoxFit.cover,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(left: 15),
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        '${product!.price}',
-                        style: TextStyle(fontSize: 18),
+                      kHeight10,
+                      Image.network(
+                        value.product!.images[0],
+                        height: 235,
+                        width: MediaQuery.of(context).size.width / 1.2,
+                        fit: BoxFit.cover,
                       ),
-                    ),
-                    Container(
-                      alignment: Alignment.topLeft,
-                      padding:
-                          const EdgeInsets.only(left: 15, top: 5, right: 40),
-                      child: Text(
-                        '${product!.name}',
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+                      Container(
+                        padding: const EdgeInsets.only(left: 15),
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          '${value.product!.price}',
+                          style: const TextStyle(fontSize: 18),
+                        ),
                       ),
-                    ),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: product!.images
-                            .map(
-                              (e) => Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Image.network(
-                                  e,
-                                  fit: BoxFit.cover,
-                                  width: 100,
-                                  height: 100,
+                      Container(
+                        alignment: Alignment.topLeft,
+                        padding:
+                            const EdgeInsets.only(left: 15, top: 5, right: 40),
+                        child: Text(
+                          value.product!.name,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: value.product!.images
+                              .map(
+                                (e) => Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Image.network(
+                                    e,
+                                    fit: BoxFit.cover,
+                                    width: 100,
+                                    height: 100,
+                                  ),
                                 ),
-                              ),
-                            )
-                            .toList(),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 15,
-                      ).copyWith(left: 15),
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        'See all deals',
-                        style: TextStyle(
-                          color: Colors.cyan[800],
+                              )
+                              .toList(),
                         ),
                       ),
-                    ),
-                  ],
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 15,
+                        ).copyWith(left: 15),
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'See all deals',
+                          style: TextStyle(
+                            color: Colors.cyan[800],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              );
+    );
   }
 }

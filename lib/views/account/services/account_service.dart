@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../core/error_handling.dart';
 import '../../../core/url.dart';
 import '../../../core/utils.dart';
@@ -12,9 +11,7 @@ import '../../../providers/user_provider.dart';
 import '../../auth/screens/auth_screen.dart';
 
 class AccountServices {
-  Future<List<Order>> fetchMyOrders({
-    required BuildContext context,
-  }) async {
+  Future<List<Order>> fetchMyOrders({required BuildContext context}) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     List<Order> orderList = [];
     try {
@@ -51,6 +48,7 @@ class AccountServices {
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
       await sharedPreferences.setString('x-auth-token', '');
+      // ignore: use_build_context_synchronously
       Navigator.pushNamedAndRemoveUntil(
         context,
         AuthScreen.routeName,

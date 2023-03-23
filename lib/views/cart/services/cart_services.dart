@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:e_shoppie/core/error_handling.dart';
 import 'package:e_shoppie/core/url.dart';
 import 'package:e_shoppie/models/product.dart';
@@ -7,7 +6,6 @@ import 'package:e_shoppie/providers/user_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
-
 import '../../../core/utils.dart';
 import '../../../models/user.dart';
 
@@ -27,6 +25,7 @@ class CartServices {
           'x-auth-token': userProvider.user.token,
         },
       );
+      // ignore: use_build_context_synchronously
       httpErrorHandle(
         response: res,
         context: context,

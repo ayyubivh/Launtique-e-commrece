@@ -18,11 +18,18 @@ class AccountButton extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(color: Colors.white, width: 0.0),
           borderRadius: BorderRadius.circular(50),
-          color: Colors.white,
+          color: Colors.grey[200],
+          boxShadow: [
+            BoxShadow(
+              color: Colors.blueGrey.withOpacity(0.5),
+              offset: const Offset(4, 4),
+              blurRadius: 10,
+            ),
+          ],
         ),
-        child: OutlinedButton(
+        child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.black12.withOpacity(0.03),
+            backgroundColor: Colors.blueGrey[100],
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(50),
             ),

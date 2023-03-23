@@ -20,14 +20,15 @@ class AuthService {
   }) async {
     try {
       User user = User(
-          id: '',
-          name: name,
-          password: password,
-          email: email,
-          address: '',
-          type: '',
-          token: '',
-          cart: []);
+        id: '',
+        name: name,
+        password: password,
+        email: email,
+        address: '',
+        type: '',
+        token: '',
+        cart: [],
+      );
 
       http.Response res = await http.post(
         Uri.parse('$uri/api/signup'),
@@ -37,6 +38,7 @@ class AuthService {
         },
       );
 
+      // ignore: use_build_context_synchronously
       httpErrorHandle(
         response: res,
         context: context,
@@ -44,6 +46,11 @@ class AuthService {
           showSnackBar(
             context,
             'Account created! Login with the same credentials!',
+          );
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            BottomBar.routeName,
+            (route) => false,
           );
         },
       );
@@ -76,8 +83,10 @@ class AuthService {
         context: context,
         onSuccess: () async {
           SharedPreferences prefs = await SharedPreferences.getInstance();
+          // ignore: use_build_context_synchronously
           Provider.of<UserProvider>(context, listen: false).setUser(res.body);
           await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
+          // ignore: use_build_context_synchronously
           Navigator.pushNamedAndRemoveUntil(
             context,
             BottomBar.routeName,
@@ -123,7 +132,6 @@ class AuthService {
 
         var userProvider = Provider.of<UserProvider>(context, listen: false);
         userProvider.setUser(userRes.body);
-        print(userRes.body);
       }
     } catch (e) {
       showSnackBar(context, e.toString());

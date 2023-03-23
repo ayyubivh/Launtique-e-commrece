@@ -12,6 +12,7 @@ class CategoryProductsChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return charts.BarChart(
+      animationDuration: const Duration(seconds: 2),
       seriesList,
       animate: true,
     );

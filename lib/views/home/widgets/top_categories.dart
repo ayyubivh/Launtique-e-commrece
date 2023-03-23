@@ -13,12 +13,10 @@ class TopCategories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: ListView.builder(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         shrinkWrap: true,
-        // scrollDirection: Axis.vertical,
         itemCount: GlobalVariables.categoryImages.length,
         itemBuilder: (context, index) {
           return GestureDetector(
@@ -31,16 +29,6 @@ class TopCategories extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 4),
               child: Stack(
                 children: [
-                  // ClipRRect(
-                  //   borderRadius: BorderRadius.circular(20),
-                  //   child: Image.asset(
-                  //     GlobalVariables.categoryImages[index]['image']!,
-                  //     fit: BoxFit.cover,
-                  //     // height: 60,
-                  //     width: size.width,
-                  //     colorBlendMode: BlendMode.colorBurn,
-                  //   ),
-                  // ),
                   Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
@@ -49,10 +37,6 @@ class TopCategories extends StatelessWidget {
                             GlobalVariables.categoryImages[index]['image']!,
                           ),
                           fit: BoxFit.cover,
-                          // colorFilter: ColorFilter.mode(
-                          //   Colors.black26,
-                          //   BlendMode.darken,
-                          // ),
                         )),
                   ),
                   Positioned(

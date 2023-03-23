@@ -8,39 +8,35 @@ import '../../../providers/user_provider.dart';
 import '../../product_details/services/product_details_service.dart';
 import '../services/cart_services.dart';
 
-class CartProduct extends StatefulWidget {
+class CartProduct extends StatelessWidget {
   final int index;
-  const CartProduct({
+  CartProduct({
     Key? key,
     required this.index,
   }) : super(key: key);
 
-  @override
-  State<CartProduct> createState() => _CartProductState();
-}
-
-class _CartProductState extends State<CartProduct> {
   final ProductDetailsServices productDetailsServices =
       ProductDetailsServices();
+
   final CartServices cartServices = CartServices();
-
-  void increaseQuantity(Product product) {
-    productDetailsServices.addToCart(
-      context: context,
-      product: product,
-    );
-  }
-
-  void decreaseQuantity(Product product) {
-    cartServices.removeFromCart(
-      context: context,
-      product: product,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
-    final productCart = context.watch<UserProvider>().user.cart[widget.index];
+    void increaseQuantity(Product product) {
+      productDetailsServices.addToCart(
+        context: context,
+        product: product,
+      );
+    }
+
+    void decreaseQuantity(Product product) {
+      cartServices.removeFromCart(
+        context: context,
+        product: product,
+      );
+    }
+
+    final productCart = context.watch<UserProvider>().user.cart[index];
     final product = Product.fromMap(productCart['product']);
     final quantity = productCart['quantity'];
 
@@ -82,12 +78,6 @@ class _CartProductState extends State<CartProduct> {
                     ),
                   ),
                   kHeight10,
-                  // Container(
-                  //   width: 235,
-                  //   padding: const EdgeInsets.only(left: 10),
-                  //   child: const Text('Eligible for FREE Shipping'),
-                  // ),
-
                   Container(
                     padding: const EdgeInsets.only(left: 10),
                     child: const Text(
@@ -98,7 +88,6 @@ class _CartProductState extends State<CartProduct> {
                       maxLines: 2,
                     ),
                   ),
-
                   Row(
                     children: [
                       Container(

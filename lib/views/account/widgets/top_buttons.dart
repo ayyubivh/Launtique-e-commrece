@@ -1,3 +1,4 @@
+import 'package:e_shoppie/core/sizedboxes.dart';
 import 'package:e_shoppie/views/account/services/account_service.dart';
 import 'package:flutter/material.dart';
 
@@ -21,12 +22,14 @@ class TopButtons extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 10),
+        kHeight15,
         Row(
           children: [
             AccountButton(
                 text: 'Log Out',
-                onTap: () => AccountServices().logOut(context)),
+                onTap: () {
+                  popUpDialog(context);
+                }),
             AccountButton(
               text: 'Your Wish List',
               onTap: () {},
@@ -34,6 +37,38 @@ class TopButtons extends StatelessWidget {
           ],
         ),
       ],
+    );
+  }
+
+  popUpDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Logout'),
+          content: const Text('Are you sure you to logout?'),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(
+                Icons.cancel,
+                color: Colors.red,
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                AccountServices().logOut(context);
+              },
+              icon: const Icon(
+                Icons.done,
+                color: Colors.green,
+              ),
+            )
+          ],
+        );
+      },
     );
   }
 }

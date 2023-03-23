@@ -1,120 +1,59 @@
-import 'package:e_shoppie/views/admin/screen/orders_screen.dart';
+import 'package:e_shoppie/providers/admin/admin_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../core/global_variables.dart';
-import 'analytic_screen.dart';
-import 'posts_screen.dart';
 
-class AdminScreen extends StatefulWidget {
+class AdminScreen extends StatelessWidget {
   const AdminScreen({Key? key}) : super(key: key);
 
   @override
-  State<AdminScreen> createState() => _AdminScreenState();
-}
-
-class _AdminScreenState extends State<AdminScreen> {
-  int _page = 0;
-  double bottomBarWidth = 42;
-  double bottomBarBorderWidth = 5;
-
-  List<Widget> pages = [
-    const PostsScreen(),
-    const AnalyticsScreen(),
-    const OrderedScreen(),
-  ];
-
-  void updatePage(int page) {
-    setState(() {
-      _page = page;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final AdminProvider provider = Provider.of<AdminProvider>(context);
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(50),
-        child: AppBar(
-          backgroundColor: GlobalVariables.appBarColor,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text(
-                'Admin',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              )
-            ],
-          ),
+      appBar: AppBar(
+        backgroundColor: GlobalVariables.appBarColor,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: const [
+            Text(
+              'Admin',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            )
+          ],
         ),
       ),
-      body: pages[_page],
+      body: provider.pages[provider.currenIndex],
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _page,
+        currentIndex: provider.currenIndex,
         selectedItemColor: GlobalVariables.selectedNavBarColor,
         unselectedItemColor: GlobalVariables.unselectedNavBarColor,
         backgroundColor: GlobalVariables.backgroundColor,
         iconSize: 28,
-        onTap: updatePage,
-        items: [
+        onTap: (value) {
+          provider.updatePage(value);
+        },
+        items: const [
           // POSTS
           BottomNavigationBarItem(
-            icon: Container(
-              width: bottomBarWidth,
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                    color: _page == 0
-                        ? GlobalVariables.selectedNavBarColor
-                        : GlobalVariables.backgroundColor,
-                    width: bottomBarBorderWidth,
-                  ),
-                ),
-              ),
-              child: const Icon(
-                Icons.home_outlined,
-              ),
+            icon: Icon(
+              Icons.home_outlined,
             ),
             label: '',
           ),
           // ANALYTICS
           BottomNavigationBarItem(
-            icon: Container(
-              width: bottomBarWidth,
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                    color: _page == 1
-                        ? GlobalVariables.selectedNavBarColor
-                        : GlobalVariables.backgroundColor,
-                    width: bottomBarBorderWidth,
-                  ),
-                ),
-              ),
-              child: const Icon(
-                Icons.analytics_outlined,
-              ),
+            icon: Icon(
+              Icons.analytics_outlined,
             ),
             label: '',
           ),
           // ORDERS
           BottomNavigationBarItem(
-            icon: Container(
-              width: bottomBarWidth,
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                    color: _page == 2
-                        ? GlobalVariables.selectedNavBarColor
-                        : GlobalVariables.backgroundColor,
-                    width: bottomBarBorderWidth,
-                  ),
-                ),
-              ),
-              child: const Icon(
-                Icons.all_inbox_outlined,
-              ),
+            icon: Icon(
+              Icons.all_inbox_outlined,
             ),
             label: '',
           ),

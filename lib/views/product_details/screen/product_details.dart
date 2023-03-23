@@ -1,12 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:e_shoppie/core/colors.dart';
+import 'package:e_shoppie/core/sizedboxes.dart';
 import 'package:e_shoppie/core/utils.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
-
 import '../../../common/custom_button.dart';
-import '../../../common/serch_textform.dart';
 import '../../../common/stars.dart';
 import '../../../core/global_variables.dart';
 import '../../../models/product.dart';
@@ -64,30 +63,27 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(40),
-        child: AppBar(
-          iconTheme: const IconThemeData(color: Colors.blueGrey),
-          backgroundColor: GlobalVariables.appBarColor,
-          elevation: 0,
-          title: const Text(
-            'LAUNTIQUE',
-            style: TextStyle(
-              color: Colors.blueGrey,
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'Lato',
-              letterSpacing: 1,
-            ),
+      appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.blueGrey),
+        backgroundColor: GlobalVariables.appBarColor,
+        title: const Text(
+          'LAUNTIQUE',
+          style: TextStyle(
+            color: Colors.blueGrey,
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Lato',
+            letterSpacing: 1,
           ),
-          centerTitle: true,
         ),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SearchTextForm(onFieldSubmit: navigateToSearchScreen),
+            kHeight10,
+            // SearchTextForm(onFieldSubmit: navigateToSearchScreen),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -96,32 +92,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   Text(
                     widget.product.id!,
                   ),
-                  Stars(
-                    rating: avgRating,
-                  ),
                 ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 20,
-                horizontal: 10,
-              ),
-              child: Text(
-                widget.product.name,
-                style: const TextStyle(
-                  fontSize: 15,
-                ),
               ),
             ),
             CarouselSlider(
               items: widget.product.images.map(
                 (i) {
                   return Builder(
-                    builder: (BuildContext context) => Image.network(
-                      i,
-                      fit: BoxFit.contain,
-                      height: 200,
+                    builder: (BuildContext context) => ClipRRect(
+                      borderRadius: BorderRadius.circular(0),
+                      child: Image.network(
+                        i,
+                        fit: BoxFit.contain,
+                        width: MediaQuery.of(context).size.width - 6,
+                        // height: 100,
+                      ),
                     ),
                   );
                 },
@@ -131,60 +116,80 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 height: 300,
               ),
             ),
-            Container(
-              color: Colors.black12,
-              height: 5,
-            ),
+            kHeight10,
             Padding(
-              padding: const EdgeInsets.all(8),
-              child: RichText(
-                text: TextSpan(
-                  text: 'Deal Price: ',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.black,
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
+              child: Text(
+                widget.product.name,
+                style: const TextStyle(
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
-                  ),
-                  children: [
-                    TextSpan(
-                      text: '\$${widget.product.price}',
-                      style: const TextStyle(
-                        fontSize: 22,
-                        color: Colors.red,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
+                    fontFamily: 'Lato'),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
               child: Text(widget.product.description),
             ),
             Container(
-              color: Colors.black12,
-              height: 5,
+              color: Colors.grey[100],
+              height: 20,
             ),
             Padding(
               padding: const EdgeInsets.all(10),
-              child: CustomButton(
-                text: 'Buy Now',
-                onTap: () {},
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  RichText(
+                    text: TextSpan(
+                      text: 'Deal Price: ',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: '\$${widget.product.price}',
+                          style: const TextStyle(
+                            fontSize: 22,
+                            color: Colors.red,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Stars(
+                    rating: avgRating,
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 10),
+            Container(
+              color: Colors.grey[100],
+              height: 20,
+            ),
+            // Padding(
+            //   padding: const EdgeInsets.all(10),
+            //   child: CustomButton(
+            //     text: 'Buy Now',
+            //     onTap: () {},
+            //   ),
+            // ),
+            // const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.all(10),
               child: CustomButton(
-                text: 'Add to Cart',
-                onTap: addToCart,
-                color: const Color.fromRGBO(254, 216, 19, 1),
-              ),
+                  text: 'Add to Cart',
+                  onTap: addToCart,
+                  color: Colors.blueGrey),
             ),
             const SizedBox(height: 10),
             Container(
-              color: Colors.black12,
+              color: Colors.grey[100],
               height: 5,
             ),
             const Padding(
@@ -192,8 +197,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               child: Text(
                 'Rate The Product',
                 style: TextStyle(
-                  fontSize: 22,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
+                  fontFamily: 'Lato',
                 ),
               ),
             ),
@@ -204,9 +210,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               allowHalfRating: true,
               itemCount: 5,
               itemPadding: const EdgeInsets.symmetric(horizontal: 4),
-              itemBuilder: (context, _) => const Icon(
+              itemBuilder: (context, _) => Icon(
                 Icons.star,
-                color: GlobalVariables.secondaryColor,
+                color: kblack,
               ),
               onRatingUpdate: (rating) {
                 productDetailsServices.rateProduct(

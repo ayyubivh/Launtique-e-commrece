@@ -1,12 +1,12 @@
 import 'package:e_shoppie/common/custom_button.dart';
+import 'package:e_shoppie/core/sizedboxes.dart';
 import 'package:e_shoppie/models/orders.dart';
+import 'package:e_shoppie/providers/account/orders_provider.dart';
 import 'package:e_shoppie/providers/user_provider.dart';
-import 'package:e_shoppie/views/admin/screen/admin_sceeen.dart';
 import 'package:e_shoppie/views/admin/services/admin_services.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
 import '../../../core/global_variables.dart';
 import '../../search/screens/search_screen.dart';
 
@@ -20,7 +20,6 @@ class OrderDetailsScreen extends StatefulWidget {
 }
 
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
-  int currentStep = 0;
   final AdminServices adminScreen = AdminServices();
   void navigateToSearchScreen(String query) {
     Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
@@ -29,98 +28,33 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    currentStep = widget.order.status;
-  }
-
-//========only for admin======\\
-  void changeOrderStatus(int status) {
-    adminScreen.changeOrderStatus(
-      context: context,
-      order: widget.order,
-      status: status + 1,
-      onSuccess: () {
-        setState(() {
-          currentStep += 1;
-        });
-      },
-    );
+    Provider.of<OrderProvider>(context, listen: false).currentStep =
+        widget.order.status;
   }
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60),
-        child: AppBar(
-          backgroundColor: GlobalVariables.appBarColor,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Container(
-                  height: 42,
-                  margin: const EdgeInsets.only(left: 15),
-                  child: Material(
-                    borderRadius: BorderRadius.circular(7),
-                    elevation: 1,
-                    child: TextFormField(
-                      onFieldSubmitted: navigateToSearchScreen,
-                      decoration: InputDecoration(
-                        prefixIcon: InkWell(
-                          onTap: () {},
-                          child: const Padding(
-                            padding: EdgeInsets.only(
-                              left: 6,
-                            ),
-                            child: Icon(
-                              Icons.search,
-                              color: Colors.black,
-                              size: 23,
-                            ),
-                          ),
-                        ),
-                        filled: true,
-                        fillColor: Colors.white,
-                        contentPadding: const EdgeInsets.only(top: 10),
-                        border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(7),
-                          ),
-                          borderSide: BorderSide.none,
-                        ),
-                        enabledBorder: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(7),
-                          ),
-                          borderSide: BorderSide(
-                            color: Colors.black38,
-                            width: 1,
-                          ),
-                        ),
-                        hintText: 'Search Amazon.in',
-                        hintStyle: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 17,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                color: Colors.transparent,
-                height: 42,
-                margin: const EdgeInsets.symmetric(horizontal: 10),
-                child: const Icon(Icons.mic, color: Colors.black, size: 25),
-              ),
-            ],
+      appBar: AppBar(
+        backgroundColor: GlobalVariables.appBarColor,
+        title: const Text(
+          'LAUNTIQUE',
+          style: TextStyle(
+            color: Colors.blueGrey,
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Lato',
+            letterSpacing: 1,
           ),
         ),
+        centerTitle: true,
+        iconTheme: const IconThemeData(color: Colors.blueGrey),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            kHeight10,
             const Text(
               'View Order details',
               style: TextStyle(
@@ -208,21 +142,25 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   color: Colors.black12,
                 ),
               ),
-              child: Stepper(
-                  currentStep: currentStep,
+              child: Consumer<OrderProvider>(
+                builder: (context, value, child) => Stepper(
+                  currentStep: value.currentStep,
                   controlsBuilder: (context, details) {
                     if (user.type == 'admin') {
                       return CustomButton(
                         text: 'Done',
-                        onTap: () => changeOrderStatus(details.currentStep),
+                        onTap: () {
+                          value.changeOrderStatus(
+                              details.currentStep, widget.order, context);
+                        },
                       );
                     }
                     return const SizedBox();
                   },
                   steps: [
                     Step(
-                      isActive: currentStep >= 0,
-                      state: currentStep >= 0
+                      isActive: value.currentStep >= 0,
+                      state: value.currentStep >= 0
                           ? StepState.complete
                           : StepState.indexed,
                       title: const Text('Pending'),
@@ -231,36 +169,38 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       ),
                     ),
                     Step(
-                      isActive: currentStep >= 1,
-                      state: currentStep >= 1
+                      isActive: value.currentStep >= 1,
+                      state: value.currentStep >= 1
                           ? StepState.complete
                           : StepState.indexed,
-                      title: Text('Completed'),
-                      content: Text(
+                      title: const Text('Completed'),
+                      content: const Text(
                         'Your order has been delivered, you are yet to sign.',
                       ),
                     ),
                     Step(
-                      isActive: currentStep >= 2,
-                      state: currentStep >= 2
+                      isActive: value.currentStep >= 2,
+                      state: value.currentStep >= 2
                           ? StepState.complete
                           : StepState.indexed,
-                      title: Text('Received'),
-                      content: Text(
+                      title: const Text('Received'),
+                      content: const Text(
                         'Your order has been delivered, you are yet to sign.',
                       ),
                     ),
                     Step(
-                      isActive: currentStep >= 3,
-                      state: currentStep >= 3
+                      isActive: value.currentStep >= 3,
+                      state: value.currentStep >= 3
                           ? StepState.complete
                           : StepState.indexed,
-                      title: Text('Delivered'),
-                      content: Text(
+                      title: const Text('Delivered'),
+                      content: const Text(
                         'Your order has bee n delivered, you are yet to sign.',
                       ),
                     ),
-                  ]),
+                  ],
+                ),
+              ),
             ),
           ],
         ),

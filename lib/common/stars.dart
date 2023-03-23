@@ -10,6 +10,7 @@ class Stars extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RatingBarIndicator(
+      itemPadding: EdgeInsets.only(right: 5),
       direction: Axis.horizontal,
       itemCount: 5,
       rating: rating,

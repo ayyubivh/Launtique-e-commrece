@@ -9,7 +9,6 @@ import 'package:e_shoppie/views/order_details/screens/orderdetails.dart';
 import 'package:e_shoppie/views/product_details/screen/product_details.dart';
 import 'package:e_shoppie/views/search/screens/search_screen.dart';
 import 'package:flutter/material.dart';
-
 import 'views/admin/screen/add_product_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
@@ -32,7 +31,7 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     case AddProductScreen.routeName:
       return MaterialPageRoute(
         settings: routeSettings,
-        builder: (_) => const AddProductScreen(),
+        builder: (_) => AddProductScreen(),
       );
     case CategoryDealsScreen.routeName:
       var category = routeSettings.arguments as String;

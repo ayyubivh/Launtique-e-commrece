@@ -9,6 +9,7 @@ class SearchTextForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       height: 60,
       color: GlobalVariables.appBarColor,
       child: Padding(
@@ -19,8 +20,8 @@ class SearchTextForm extends StatelessWidget {
             color: kwhite,
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                offset: Offset(7, 7),
+                color: Colors.grey.withOpacity(0.6),
+                offset: const Offset(7, 7),
                 blurRadius: 10,
               ),
             ],
@@ -43,17 +44,16 @@ class SearchTextForm extends StatelessWidget {
                 ),
               ),
               filled: true,
-              enabledBorder: OutlineInputBorder(
+              focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide(
+                  borderSide: const BorderSide(
                     color: Colors.white,
                   )),
-              // border: OutlineInputBorder(
-              //     borderRadius: BorderRadius.circular(30),
-              //     borderSide: BorderSide(
-              //       color: Colors.amber,
-              //       width: 3,
-              //     )),
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: const BorderSide(
+                    color: Colors.white,
+                  )),
               fillColor: Colors.white,
               contentPadding: const EdgeInsets.only(top: 10),
               hintText: 'Search ',

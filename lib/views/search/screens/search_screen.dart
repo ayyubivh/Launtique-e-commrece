@@ -1,40 +1,28 @@
+import 'package:e_shoppie/providers/search/search_provider.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import '../../../common/loader.dart';
+import '../../../common/serch_textform.dart';
 import '../../../core/global_variables.dart';
-import '../../../models/product.dart';
 import '../../home/widgets/addres_box.dart';
 import '../../product_details/screen/product_details.dart';
-import '../services/search_Services.dart';
 import '../widgets/searched_products.dart';
 
 class SearchScreen extends StatefulWidget {
   static const String routeName = '/search-screen';
   final String searchQuery;
-  const SearchScreen({
-    Key? key,
-    required this.searchQuery,
-  }) : super(key: key);
+  const SearchScreen({Key? key, required this.searchQuery}) : super(key: key);
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  List<Product>? products;
-  final SearchServices searchServices = SearchServices();
-
   @override
   void initState() {
     super.initState();
-    fetchSearchedProduct();
-  }
-
-  fetchSearchedProduct() async {
-    products = (await searchServices.fetchSearchedProduct(
-            context: context, searchQuery: widget.searchQuery))
-        .cast<Product>();
-    setState(() {});
+    Provider.of<SearchProvider>(context, listen: false)
+        .fetchSearchedProduct(context, widget.searchQuery);
   }
 
   void navigateToSearchScreen(String query) {
@@ -44,101 +32,58 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60),
-        child: AppBar(
-          backgroundColor: GlobalVariables.appBarColor,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Container(
-                  height: 42,
-                  margin: const EdgeInsets.only(left: 15),
-                  child: Material(
-                    borderRadius: BorderRadius.circular(7),
-                    elevation: 1,
-                    child: TextFormField(
-                      onFieldSubmitted: navigateToSearchScreen,
-                      decoration: InputDecoration(
-                        prefixIcon: InkWell(
-                          onTap: () {},
-                          child: const Padding(
-                            padding: EdgeInsets.only(
-                              left: 6,
-                            ),
-                            child: Icon(
-                              Icons.search,
-                              color: Colors.black,
-                              size: 23,
-                            ),
-                          ),
-                        ),
-                        filled: true,
-                        fillColor: Colors.white,
-                        contentPadding: const EdgeInsets.only(top: 10),
-                        border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(7),
-                          ),
-                          borderSide: BorderSide.none,
-                        ),
-                        enabledBorder: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(7),
-                          ),
-                          borderSide: BorderSide(
-                            color: Colors.black38,
-                            width: 1,
-                          ),
-                        ),
-                        hintText: 'Search Amazon.in',
-                        hintStyle: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 17,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                color: Colors.transparent,
-                height: 42,
-                margin: const EdgeInsets.symmetric(horizontal: 10),
-                child: const Icon(Icons.mic, color: Colors.black, size: 25),
-              ),
-            ],
+      appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.blueGrey),
+        backgroundColor: GlobalVariables.appBarColor,
+        elevation: 0,
+        title: const Text(
+          'LAUNTIQUE',
+          style: TextStyle(
+            color: Colors.blueGrey,
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Lato',
+            letterSpacing: 1,
           ),
         ),
+        centerTitle: true,
       ),
-      body: products == null
-          ? const Loader()
-          : Column(
-              children: [
-                const AddressBox(),
-                const SizedBox(height: 10),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: products!.length,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            ProductDetailScreen.routeName,
-                            arguments: products![index],
-                          );
-                        },
-                        child: SearchedProduct(
-                          product: products![index],
+      body: Column(
+        children: [
+          SearchTextForm(onFieldSubmit: navigateToSearchScreen),
+          Consumer<SearchProvider>(
+            builder: (context, value, child) => value.products == null
+                ? const Loader()
+                : Expanded(
+                    child: Column(
+                      children: [
+                        const AddressBox(),
+                        const SizedBox(height: 10),
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: value.products!.length,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    ProductDetailScreen.routeName,
+                                    arguments: value.products![index],
+                                  );
+                                },
+                                child: SearchedProduct(
+                                  product: value.products![index],
+                                ),
+                              );
+                            },
+                          ),
                         ),
-                      );
-                    },
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
+          ),
+        ],
+      ),
     );
   }
 }

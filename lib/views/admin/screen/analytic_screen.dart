@@ -47,10 +47,11 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                 height: 250,
                 child: CategoryProductsChart(seriesList: [
                   charts.Series(
-                      id: 'Sales',
-                      data: earnings!,
-                      domainFn: (Sales sales, _) => sales.label,
-                      measureFn: (Sales sales, _) => sales.earning),
+                    id: 'Sales',
+                    data: earnings!,
+                    domainFn: (Sales sales, _) => sales.label,
+                    measureFn: (Sales sales, _) => sales.earning,
+                  ),
                 ]),
               )
             ],

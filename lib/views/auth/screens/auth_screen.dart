@@ -3,67 +3,32 @@ import 'package:e_shoppie/common/custom_textfeild.dart';
 import 'package:e_shoppie/core/colors.dart';
 import 'package:e_shoppie/core/global_variables.dart';
 import 'package:e_shoppie/core/sizedboxes.dart';
+import 'package:e_shoppie/providers/auth/auth_provider.dart';
 import 'package:flutter/material.dart';
-import '../services/auth_service.dart';
+import 'package:provider/provider.dart';
 
 enum Auth {
   signin,
   signup,
 }
 
-bool passwordVisible = false;
 double screenHeight = 0;
 double screenWidth = 0;
 
-class AuthScreen extends StatefulWidget {
+class AuthScreen extends StatelessWidget {
   static const String routeName = '/auth-screen';
   const AuthScreen({super.key});
-
-  @override
-  State<AuthScreen> createState() => _AuthScreenState();
-}
-
-class _AuthScreenState extends State<AuthScreen> {
-  Auth _auth = Auth.signup;
-  final _signUpFormKey = GlobalKey<FormState>();
-  final _signInFormKey = GlobalKey<FormState>();
-  final AuthService authService = AuthService();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _nameController = TextEditingController();
-  @override
-  void dispose() {
-    super.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    _nameController.dispose();
-  }
-
-  @override
-  void signUpUser() {
-    authService.signUpUser(
-        context: context,
-        email: _emailController.text,
-        password: _passwordController.text,
-        name: _nameController.text);
-  }
-
-  void signInUser() {
-    authService.singInUser(
-        context: context,
-        email: _emailController.text,
-        password: _passwordController.text);
-  }
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: kwhite,
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Stack(
+            child: Consumer<AuthProvider>(builder: (context, value, child) {
+          return Stack(
             children: [
               ClipPath(
                 clipper: DrawClip1(),
@@ -71,10 +36,14 @@ class _AuthScreenState extends State<AuthScreen> {
                   height: size.height,
                   width: size.width,
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [
-                    Color(0xff46ddbf).withOpacity(0.5),
-                    Color(0xff3088e2).withOpacity(0.5)
-                  ], begin: Alignment.topLeft, end: Alignment.bottomLeft)),
+                      gradient: LinearGradient(
+                    colors: [
+                      const Color(0xff46ddbf).withOpacity(0.5),
+                      const Color(0xff3088e2).withOpacity(0.5)
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomLeft,
+                  )),
                 ),
               ),
               ClipPath(
@@ -84,9 +53,13 @@ class _AuthScreenState extends State<AuthScreen> {
                   width: size.width,
                   decoration: const BoxDecoration(
                       gradient: LinearGradient(
-                          colors: [Color(0xff46ddbf), Color(0xff3088e2)],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomLeft)),
+                    colors: [
+                      Color(0xff46ddbf),
+                      Color(0xff3088e2),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomLeft,
+                  )),
                 ),
               ),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -103,9 +76,9 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                 ),
                 kHeight15,
-                if (_auth == Auth.signup)
+                if (value.auth == Auth.signup)
                   Form(
-                    key: _signUpFormKey,
+                    key: value.signUpFormKey,
                     child: Padding(
                       padding: const EdgeInsets.all(28.0),
                       child: Column(
@@ -124,8 +97,8 @@ class _AuthScreenState extends State<AuthScreen> {
                                     fontWeight: FontWeight.w700,
                                     fontFamily: 'Lato'),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 16.0),
+                              const Padding(
+                                padding: EdgeInsets.only(bottom: 16.0),
                                 child: Text(
                                   '_________________',
                                   style: TextStyle(fontSize: 30),
@@ -134,24 +107,22 @@ class _AuthScreenState extends State<AuthScreen> {
                             ],
                           ),
                           CustomTextField(
-                            controller: _nameController,
+                            controller: value.nameController,
                             hinTtext: 'Name',
                           ),
                           CustomTextField(
-                            controller: _emailController,
+                            controller: value.emailController,
                             hinTtext: 'E-Mail',
                           ),
                           CustomTextField(
-                            pstext: passwordVisible,
-                            controller: _passwordController,
+                            pstext: value.passwordVisible,
+                            controller: value.passwordController,
                             hinTtext: 'Password',
                             suffix: IconButton(
                               onPressed: () {
-                                setState(() {
-                                  passwordVisible = !passwordVisible;
-                                });
+                                value.visibility();
                               },
-                              icon: passwordVisible
+                              icon: value.passwordVisible
                                   ? Icon(
                                       Icons.visibility,
                                       color: kblack,
@@ -167,9 +138,7 @@ class _AuthScreenState extends State<AuthScreen> {
                             color: GlobalVariables.secondaryColor,
                             text: 'SIGN UP',
                             onTap: () {
-                              if (_signUpFormKey.currentState!.validate()) {
-                                signUpUser();
-                              }
+                              value.signUpUser(context);
                             },
                           )
                         ],
@@ -179,20 +148,16 @@ class _AuthScreenState extends State<AuthScreen> {
                 ListTile(
                   title: GestureDetector(
                     onTap: () {
-                      setState(() {
-                        _auth = Auth.signin;
-                      });
+                      value.authEnum();
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         GestureDetector(
                             onTap: () {
-                              setState(() {
-                                _auth = Auth.signin;
-                              });
+                              value.authEnum();
                             },
-                            child: _auth == Auth.signup
+                            child: value.auth == Auth.signup
                                 ? Row(
                                     children: [
                                       const Text(
@@ -218,9 +183,9 @@ class _AuthScreenState extends State<AuthScreen> {
                     ),
                   ),
                 ),
-                if (_auth == Auth.signin)
+                if (value.auth == Auth.signin)
                   Form(
-                    key: _signInFormKey,
+                    key: value.signInFormKey,
                     child: Padding(
                       padding: const EdgeInsets.all(28.0),
                       child: Column(
@@ -237,8 +202,8 @@ class _AuthScreenState extends State<AuthScreen> {
                                     fontWeight: FontWeight.w700,
                                     fontFamily: 'Lato'),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 16.0),
+                              const Padding(
+                                padding: EdgeInsets.only(bottom: 16.0),
                                 child: Text(
                                   '___________________',
                                   style: TextStyle(fontSize: 30),
@@ -247,20 +212,18 @@ class _AuthScreenState extends State<AuthScreen> {
                             ],
                           ),
                           CustomTextField(
-                            controller: _emailController,
+                            controller: value.emailController,
                             hinTtext: 'E-Mail',
                           ),
                           CustomTextField(
-                            pstext: passwordVisible,
-                            controller: _passwordController,
+                            pstext: value.passwordVisible,
+                            controller: value.passwordController,
                             hinTtext: 'Password',
                             suffix: IconButton(
                               onPressed: () {
-                                setState(() {
-                                  passwordVisible = !passwordVisible;
-                                });
+                                value.visibility();
                               },
-                              icon: passwordVisible
+                              icon: value.passwordVisible
                                   ? Icon(
                                       Icons.visibility,
                                       color: kblack,
@@ -276,17 +239,15 @@ class _AuthScreenState extends State<AuthScreen> {
                             color: GlobalVariables.secondaryColor,
                             text: 'SIGN IN',
                             onTap: () {
-                              if (_signInFormKey.currentState!.validate()) {
-                                signInUser();
+                              {
+                                value.signInUser(context);
                               }
                             },
                           ),
                           kHeight10,
                           GestureDetector(
                               onTap: () {
-                                setState(() {
-                                  _auth = Auth.signup;
-                                });
+                                value.authEnum();
                               },
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -315,8 +276,8 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
               ]),
             ],
-          ),
-        ),
+          );
+        })),
       ),
     );
   }
@@ -336,7 +297,6 @@ class _AuthScreenState extends State<AuthScreen> {
 class DrawClip1 extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
-    // TODO: implement getClip
     Path path = Path();
     path.addOval(
         Rect.fromCircle(center: Offset(size.width, 50.0), radius: 150));
@@ -345,7 +305,6 @@ class DrawClip1 extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
-    // TODO: implement shouldReclip
     return true;
   }
 }
@@ -353,7 +312,6 @@ class DrawClip1 extends CustomClipper<Path> {
 class DrawClip extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
-    // TODO: implement getClip
     Path path = Path();
     path.addOval(
         Rect.fromCircle(center: Offset(size.width * 0.3, 50.0), radius: 200));
@@ -362,7 +320,6 @@ class DrawClip extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
-    // TODO: implement shouldReclip
     return true;
   }
 }
