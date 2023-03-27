@@ -1,4 +1,3 @@
-import 'package:e_shoppie/core/colors.dart';
 import 'package:e_shoppie/core/global_variables.dart';
 import 'package:flutter/material.dart';
 

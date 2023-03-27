@@ -3,6 +3,7 @@ import 'package:e_shoppie/core/colors.dart';
 import 'package:e_shoppie/providers/account/orders_provider.dart';
 import 'package:e_shoppie/providers/admin/admin_provider.dart';
 import 'package:e_shoppie/providers/auth/auth_provider.dart';
+import 'package:e_shoppie/providers/bottombar/bottom_bar_provider.dart';
 import 'package:e_shoppie/providers/home/home_provider.dart';
 import 'package:e_shoppie/providers/search/search_provider.dart';
 import 'package:e_shoppie/views/auth/screens/auth_screen.dart';
@@ -11,31 +12,19 @@ import 'package:e_shoppie/providers/user_provider.dart';
 import 'package:e_shoppie/router.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'providers/admin/orders_provider.dart';
 import 'views/admin/screen/admin_sceeen.dart';
 
 void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => UserProvider()),
-    ChangeNotifierProvider(
-      create: (context) => AuthProvider(),
-    ),
-    ChangeNotifierProvider(
-      create: (context) => OrderProvider(),
-    ),
-    ChangeNotifierProvider(
-      create: (context) => AdminProvider(),
-    ),
-    ChangeNotifierProvider(
-      create: (context) => AdminOrderProvider(),
-    ),
-    ChangeNotifierProvider(
-      create: (context) => HomeProvider(),
-    ),
-    ChangeNotifierProvider(
-      create: (context) => SearchProvider(),
-    )
+    ChangeNotifierProvider(create: (context) => AuthProvider()),
+    ChangeNotifierProvider(create: (context) => OrderProvider()),
+    ChangeNotifierProvider(create: (context) => AdminProvider()),
+    ChangeNotifierProvider(create: (context) => AdminOrderProvider()),
+    ChangeNotifierProvider(create: (context) => HomeProvider()),
+    ChangeNotifierProvider(create: (context) => SearchProvider()),
+    ChangeNotifierProvider(create: (context) => BottomBarProvider())
   ], child: const MyApp()));
 }
 
@@ -65,7 +54,7 @@ class _MyAppState extends State<MyApp> {
       onGenerateRoute: (settings) => generateRoute(settings),
       home: Provider.of<UserProvider>(context).user.token.isNotEmpty
           ? Provider.of<UserProvider>(context).user.type == 'user'
-              ? const BottomBar()
+              ? BottomBar()
               : const AdminScreen()
           : const AuthScreen(),
       // home: const IntroScreen(),
