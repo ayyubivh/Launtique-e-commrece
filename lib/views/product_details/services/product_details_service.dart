@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import '../../../core/error_handling.dart';
-import '../../../core/global_variables.dart';
 import '../../../core/url.dart';
 import '../../../core/utils.dart';
 import '../../../models/product.dart';

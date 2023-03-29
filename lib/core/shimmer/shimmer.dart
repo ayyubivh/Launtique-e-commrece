@@ -9,11 +9,12 @@ import 'package:shimmer/shimmer.dart';
 // }
 
 class ShimmerWidget extends StatelessWidget {
-  const ShimmerWidget.rectangular(
+  const ShimmerWidget.rectangle(
       {super.key,
       this.width = double.infinity - 70,
       required this.height,
-      this.shapeBorder = const RoundedRectangleBorder()});
+      this.shapeBorder = const RoundedRectangleBorder(),
+      required BorderRadius radius});
   const ShimmerWidget(
       {super.key, required this.width, required this.height, this.shapeBorder});
   const ShimmerWidget.borderRectangle({

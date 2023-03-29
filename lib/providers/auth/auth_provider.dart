@@ -59,4 +59,12 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 }
