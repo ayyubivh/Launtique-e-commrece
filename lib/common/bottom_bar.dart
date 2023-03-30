@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:badges/badges.dart';
+import 'package:e_shoppie/core/colors.dart';
 import 'package:e_shoppie/providers/bottombar/bottom_bar_provider.dart';
 import 'package:e_shoppie/views/cart/screens/cart_screens.dart';
 import 'package:e_shoppie/providers/user_provider.dart';
@@ -41,10 +42,13 @@ class BottomBar extends StatelessWidget {
               BottomNavigationBarItem(
                   icon: badges.Badge(
                     badgeStyle: const BadgeStyle(
-                      badgeColor: Colors.yellow,
+                      badgeColor: Colors.red,
                       elevation: 0,
                     ),
-                    badgeContent: Text(userCartLen.toString()),
+                    badgeContent: Text(
+                      userCartLen.toString(),
+                      style: TextStyle(color: kwhite),
+                    ),
                     child: const Icon(Icons.shopping_cart_outlined),
                   ),
                   label: '')

@@ -25,7 +25,7 @@ class CategoryDealsScreen extends StatelessWidget {
           .fetchCategoryProducts(context, category);
     });
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: kwhite,
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.blueGrey),
         backgroundColor: GlobalVariables.appBarColor,
@@ -50,34 +50,18 @@ class CategoryDealsScreen extends StatelessWidget {
                   children: [
                     kHeight10,
                     Container(
+                      height: 50,
+                      width: double.infinity,
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 13, vertical: 5),
-                      alignment: Alignment.topLeft,
-                      child: Container(
-                        height: 50,
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 5),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          color: kwhite,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.blueGrey.withOpacity(0.5),
-                              offset: const Offset(4, 4),
-                              blurRadius: 10,
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Keep shopping for $category',
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            textAlign: TextAlign.center,
+                          horizontal: 10, vertical: 5),
+                      child: Center(
+                        child: Text(
+                          'Keep shopping for $category',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                           ),
+                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
@@ -115,66 +99,68 @@ class CategoryDealsScreen extends StatelessWidget {
           arguments: product),
       child: Column(
         children: [
-          Container(
-            padding: const EdgeInsets.only(bottom: 10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(0.28),
-              color: kwhite,
-              boxShadow: [
-                BoxShadow(
-                  color: kblack.withOpacity(0.3),
-                  blurRadius: 2,
-                  spreadRadius: 1,
-                  offset: const Offset(3, 3),
-                )
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(0.28),
-                  child: Image.network(
-                    product.images[0],
-                    fit: BoxFit.cover,
-                    width: double.infinity,
+          Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Container(
+              padding: const EdgeInsets.only(bottom: 10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: kwhite,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.blueGrey.withOpacity(0.5),
+                    offset: const Offset(4, 4),
+                    blurRadius: 10,
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 8.0,
-                    right: 8.0,
-                    top: 10.0,
-                  ),
-                  child: Text(
-                    product.name.toUpperCase(),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black54,
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20.28),
+                    child: Image.network(
+                      product.images[0],
+                      fit: BoxFit.cover,
+                      width: double.infinity,
                     ),
                   ),
-                ),
-                kHeight5,
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 8.0,
-                    right: 8.0,
-                  ),
-                  child: Container(
-                    padding: const EdgeInsets.all(4),
-                    height: 24,
-                    color: GlobalVariables.appBarColor,
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 8.0,
+                      right: 8.0,
+                      top: 10.0,
+                    ),
                     child: Text(
-                      "\$ ${product.price}",
+                      product.name.toUpperCase(),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black54,
                       ),
                     ),
                   ),
-                ),
-              ],
+                  kHeight5,
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 8.0,
+                      right: 8.0,
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      height: 24,
+                      color: GlobalVariables.appBarColor,
+                      child: Text(
+                        "\$ ${product.price}",
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           )
         ],

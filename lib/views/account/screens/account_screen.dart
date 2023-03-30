@@ -40,7 +40,7 @@ class AccountScreen extends StatelessWidget {
         children: [
           SearchTextForm(onFieldSubmit: navigateToSearchScreen),
           kHeight10,
-          const BelowAppBar(),
+          // const BelowAppBar(),
           kHeight10,
           const TopButtons(),
           kHeight15,

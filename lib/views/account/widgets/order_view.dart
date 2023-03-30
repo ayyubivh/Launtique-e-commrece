@@ -113,10 +113,13 @@ class _OrderViewState extends State<OrderView> {
             ],
           ),
         ),
-        Container(
-          height: 4,
-          color: Colors.grey[200],
-        )
+        // Padding(
+        //   padding: const EdgeInsets.all(5.0),
+        //   child: Container(
+        //     height: 4,
+        //     color: Colors.grey[200],
+        //   ),
+        // )
       ],
     );
   }

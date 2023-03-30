@@ -35,15 +35,17 @@ class HomeScreen extends StatelessWidget {
           ),
           centerTitle: true,
         ),
-        body: ListView(
-          children: [
-            SearchTextForm(onFieldSubmit: navigateToSearchScreen),
-            const CarouselImage(),
-            const SizedBox(height: 10),
-            const SizedBox(height: 10),
-            const TopCategories(),
-            const DealOfDay(),
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              SearchTextForm(onFieldSubmit: navigateToSearchScreen),
+              const CarouselImage(),
+              const SizedBox(height: 10),
+              const SizedBox(height: 10),
+              const Categories(),
+              const DealOfDay(),
+            ],
+          ),
         ),
       ),
     );
