@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../core/global_variables.dart';
 
 class AdminScreen extends StatelessWidget {
+  static const String routeName = '/admin';
   const AdminScreen({Key? key}) : super(key: key);
 
   @override

@@ -36,18 +36,16 @@ class AccountScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SearchTextForm(onFieldSubmit: navigateToSearchScreen),
-            kHeight10,
-            const BelowAppBar(),
-            kHeight10,
-            const TopButtons(),
-            kHeight15,
-            const Orders(),
-          ],
-        ),
+      body: Column(
+        children: [
+          SearchTextForm(onFieldSubmit: navigateToSearchScreen),
+          kHeight10,
+          const BelowAppBar(),
+          kHeight10,
+          const TopButtons(),
+          kHeight15,
+          const Expanded(child: Orders()),
+        ],
       ),
     );
   }

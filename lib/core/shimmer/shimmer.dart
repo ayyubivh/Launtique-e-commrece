@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-// loadingShimmer() {
-//   return const ListTile(
-//     leading: ShimmerWidget.borderRectangle(width: 100, height: 100),
-//     title: ShimmerWidget.rectangular(height: 70),
-//   );
-// }
-
 class ShimmerWidget extends StatelessWidget {
   const ShimmerWidget.rectangle(
       {super.key,

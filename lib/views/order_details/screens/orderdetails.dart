@@ -8,32 +8,19 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../../../core/global_variables.dart';
-import '../../search/screens/search_screen.dart';
 
-class OrderDetailsScreen extends StatefulWidget {
+class OrderDetailsScreen extends StatelessWidget {
   static const String routeName = '/order-details';
   final Order order;
   const OrderDetailsScreen({super.key, required this.order});
 
   @override
-  State<OrderDetailsScreen> createState() => _OrderDetailsScreenState();
-}
-
-class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
-  final AdminServices adminScreen = AdminServices();
-  void navigateToSearchScreen(String query) {
-    Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    Provider.of<OrderProvider>(context, listen: false).currentStep =
-        widget.order.status;
-  }
-
-  @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<OrderProvider>(context, listen: false).currentStep =
+          order.status;
+    });
+
     final user = Provider.of<UserProvider>(context).user;
     return Scaffold(
       appBar: AppBar(
@@ -71,10 +58,10 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Order Date:      ${DateFormat().format(
-                    DateTime.fromMillisecondsSinceEpoch(widget.order.orderedAt),
+                    DateTime.fromMillisecondsSinceEpoch(order.orderedAt),
                   )}'),
-                  Text('Order ID:          ${widget.order.id}'),
-                  Text('Order Total:      \$${widget.order.totalPrice}'),
+                  Text('Order ID:          ${order.id}'),
+                  Text('Order Total:      \$${order.totalPrice}'),
                 ],
               ),
             ),
@@ -95,11 +82,11 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  for (int i = 0; i < widget.order.products.length; i++)
+                  for (int i = 0; i < order.products.length; i++)
                     Row(
                       children: [
                         Image.network(
-                          widget.order.products[i].images[0],
+                          order.products[i].images[0],
                           height: 120,
                           width: 120,
                         ),
@@ -109,7 +96,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                widget.order.products[i].name,
+                                order.products[i].name,
                                 style: const TextStyle(
                                   fontSize: 17,
                                   fontWeight: FontWeight.bold,
@@ -118,7 +105,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                 overflow: TextOverflow.ellipsis,
                               ),
                               Text(
-                                'Qty: ${widget.order.quantity[i]}',
+                                'Qty: ${order.quantity[i]}',
                               ),
                             ],
                           ),
@@ -151,7 +138,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                         text: 'Done',
                         onTap: () {
                           value.changeOrderStatus(
-                              details.currentStep, widget.order, context);
+                              details.currentStep, order, context);
                         },
                       );
                     }

@@ -1,37 +1,31 @@
 import 'package:e_shoppie/core/sizedboxes.dart';
 import 'package:e_shoppie/providers/home/home_provider.dart';
+import 'package:e_shoppie/views/home/shimmer/deal_of_day.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../common/loader.dart';
 import '../../product_details/screen/product_details.dart';
 
-class DealOfDay extends StatefulWidget {
+class DealOfDay extends StatelessWidget {
   const DealOfDay({Key? key}) : super(key: key);
 
-  @override
-  State<DealOfDay> createState() => _DealOfDayState();
-}
-
-class _DealOfDayState extends State<DealOfDay> {
-  @override
-  void initState() {
-    super.initState();
-    Provider.of<HomeProvider>(context, listen: false).fetchDealOfDay(context);
-  }
-
-  void navigateToDetailScreen() {
-    Navigator.pushNamed(
-      context,
-      ProductDetailScreen.routeName,
-      arguments: Provider.of<HomeProvider>(context, listen: false).product,
-    );
-  }
+  // @override
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<HomeProvider>(context, listen: false).fetchDealOfDay(context);
+    });
+    void navigateToDetailScreen() {
+      Navigator.pushNamed(
+        context,
+        ProductDetailScreen.routeName,
+        arguments: Provider.of<HomeProvider>(context, listen: false).product,
+      );
+    }
+
     return Consumer<HomeProvider>(
       builder: (context, value, child) => value.product == null
-          ? const Loader()
+          ? const DealOfDayShimmer()
           : value.product!.name.isEmpty
               ? const SizedBox()
               : GestureDetector(

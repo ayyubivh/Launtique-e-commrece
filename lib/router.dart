@@ -2,6 +2,7 @@ import 'package:e_shoppie/common/bottom_bar.dart';
 import 'package:e_shoppie/models/orders.dart';
 import 'package:e_shoppie/models/product.dart';
 import 'package:e_shoppie/views/address/screens/address_screen.dart';
+import 'package:e_shoppie/views/admin/screen/admin_sceeen.dart';
 import 'package:e_shoppie/views/auth/screens/auth_screen.dart';
 import 'package:e_shoppie/views/home/screens/category_deals.dart';
 import 'package:e_shoppie/views/home/screens/home_screen.dart';
@@ -32,6 +33,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => const AddProductScreen(),
+      );
+    case AdminScreen.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => const AdminScreen(),
       );
     case CategoryDealsScreen.routeName:
       var category = routeSettings.arguments as String;

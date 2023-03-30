@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:e_shoppie/views/admin/screen/admin_sceeen.dart';
+import 'package:e_shoppie/views/auth/screens/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../common/bottom_bar.dart';
@@ -32,18 +34,16 @@ class SplashProvider extends ChangeNotifier {
       Provider.of<UserProvider>(context, listen: false).user.token.isNotEmpty
           ? Provider.of<UserProvider>(context, listen: false).user.type ==
                   'user'
-              ? Navigator.pushNamed(
-                  context,
-                  BottomBar.routeName,
-                )
+              ? Navigator.pushNamed(context, BottomBar.routeName)
               : Navigator.pushNamed(
                   context,
-                  BottomBar.routeName,
+                  AdminScreen.routeName,
                 )
           : Navigator.pushNamed(
               context,
-              BottomBar.routeName,
+              AuthScreen.routeName,
             );
+      notifyListeners();
     });
   }
 }

@@ -1,7 +1,7 @@
-import 'package:e_shoppie/common/loader.dart';
 import 'package:e_shoppie/core/colors.dart';
 import 'package:e_shoppie/core/sizedboxes.dart';
 import 'package:e_shoppie/providers/home/home_provider.dart';
+import 'package:e_shoppie/views/home/shimmer/category_deals.dart';
 import 'package:e_shoppie/views/product_details/screen/product_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import '../../../core/global_variables.dart';
 import '../../../models/product.dart';
 
-class CategoryDealsScreen extends StatefulWidget {
+class CategoryDealsScreen extends StatelessWidget {
   static const String routeName = '/category-deals';
   final String category;
   const CategoryDealsScreen({
@@ -17,26 +17,19 @@ class CategoryDealsScreen extends StatefulWidget {
     required this.category,
   }) : super(key: key);
 
-  @override
-  State<CategoryDealsScreen> createState() => _CategoryDealsScreenState();
-}
-
-class _CategoryDealsScreenState extends State<CategoryDealsScreen> {
-  @override
-  void initState() {
-    super.initState();
-    Provider.of<HomeProvider>(context, listen: false)
-        .fetchCategoryProducts(context, widget.category);
-  }
-
+  // @override
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<HomeProvider>(context, listen: false)
+          .fetchCategoryProducts(context, category);
+    });
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.blueGrey),
         backgroundColor: GlobalVariables.appBarColor,
-        elevation: 0,
+        elevation: 2,
         title: const Text(
           'LAUNTIQUE',
           style: TextStyle(
@@ -51,7 +44,7 @@ class _CategoryDealsScreenState extends State<CategoryDealsScreen> {
       ),
       body: Consumer<HomeProvider>(
         builder: (context, value, child) => value.productList == null
-            ? const Loader()
+            ? const CategoryDealsShimmer()
             : SingleChildScrollView(
                 child: Column(
                   children: [
@@ -78,7 +71,7 @@ class _CategoryDealsScreenState extends State<CategoryDealsScreen> {
                         ),
                         child: Center(
                           child: Text(
-                            'Keep shopping for ${widget.category}',
+                            'Keep shopping for $category',
                             style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -101,6 +94,7 @@ class _CategoryDealsScreenState extends State<CategoryDealsScreen> {
                         itemBuilder: (context, index) {
                           final product = value.productList![index];
                           return singleItemWidget(
+                              context,
                               product,
                               index == value.productList!.length - 1
                                   ? true
@@ -115,7 +109,7 @@ class _CategoryDealsScreenState extends State<CategoryDealsScreen> {
     );
   }
 
-  Widget singleItemWidget(Product product, bool last) {
+  Widget singleItemWidget(BuildContext context, Product product, bool last) {
     return GestureDetector(
       onTap: () => Navigator.pushNamed(context, ProductDetailScreen.routeName,
           arguments: product),

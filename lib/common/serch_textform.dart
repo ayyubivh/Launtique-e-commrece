@@ -30,17 +30,14 @@ class SearchTextForm extends StatelessWidget {
             onFieldSubmitted: onFieldSubmit,
             decoration: InputDecoration(
               border: InputBorder.none,
-              prefixIcon: InkWell(
-                onTap: () {},
-                child: const Padding(
-                  padding: EdgeInsets.only(
-                    left: 6,
-                  ),
-                  child: Icon(
-                    Icons.search,
-                    color: Colors.black,
-                    size: 23,
-                  ),
+              prefixIcon: const Padding(
+                padding: EdgeInsets.only(
+                  left: 6,
+                ),
+                child: Icon(
+                  Icons.search,
+                  color: Colors.black,
+                  size: 23,
                 ),
               ),
               filled: true,

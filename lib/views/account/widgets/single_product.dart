@@ -19,6 +19,13 @@ class SingleProduct extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(5),
           color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.blueGrey.withOpacity(0.5),
+              offset: const Offset(4, 4),
+              blurRadius: 10,
+            ),
+          ],
         ),
         child: Container(
           width: 180,

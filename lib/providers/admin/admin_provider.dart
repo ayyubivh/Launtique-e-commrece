@@ -68,6 +68,7 @@ class AdminProvider extends ChangeNotifier {
   }
 
   //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=SELL PRODUCTS=-=-=-=-=-=-=-=-=-=-=-=-=-=\\
+  bool isLoading = false;
   void sellProduct(context) {
     if (addProductFormKey.currentState!.validate() && images.isNotEmpty) {
       adminServices.sellProduct(
@@ -79,6 +80,8 @@ class AdminProvider extends ChangeNotifier {
         category: category,
         images: images,
       );
+      notifyListeners();
+      isLoading = true;
     }
     clear();
     notifyListeners();

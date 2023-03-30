@@ -14,7 +14,7 @@ import '../../../core/url.dart';
 import '../models/sales.dart';
 
 class AdminServices {
-  void sellProduct({
+  sellProduct({
     required BuildContext context,
     required String name,
     required String description,
@@ -49,16 +49,15 @@ class AdminServices {
         },
         body: product.toJson(),
       );
+      // ignore: use_build_context_synchronously
       httpErrorHandle(
-        response: res,
-        context: context,
-        onSuccess: () {
-          showSnackBar(context, 'Product Added Successfully!');
-          Navigator.pop(context);
-        },
-      );
+          response: res,
+          context: context,
+          onSuccess: () {
+            showSnackBar(context, 'Product Added Successfully!');
+            Navigator.pop(context);
+          });
     } catch (e) {
-      print(e);
       showSnackBar(context, e.toString());
     }
   }
@@ -73,6 +72,7 @@ class AdminServices {
         'Content-Type': 'application/json; charset=UTF-8',
         'x-auth-token': userProvider.user.token,
       });
+      // ignore: use_build_context_synchronously
       httpErrorHandle(
         response: res,
         context: context,
@@ -109,6 +109,7 @@ class AdminServices {
               body: jsonEncode({
                 'id': product.id,
               }));
+      // ignore: use_build_context_synchronously
       httpErrorHandle(
         response: res,
         context: context,

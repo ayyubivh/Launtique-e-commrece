@@ -1,75 +1,73 @@
 import 'package:e_shoppie/core/global_variables.dart';
+import 'package:e_shoppie/core/sizedboxes.dart';
 import 'package:e_shoppie/providers/admin/admin_provider.dart';
+import 'package:e_shoppie/views/admin/shimmer/post_scrn_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../common/loader.dart';
 import '../../account/widgets/single_product.dart';
-import '../services/admin_services.dart';
 import 'add_product_screen.dart';
 
-class PostsScreen extends StatefulWidget {
+class PostsScreen extends StatelessWidget {
   const PostsScreen({Key? key}) : super(key: key);
 
   @override
-  State<PostsScreen> createState() => _PostsScreenState();
-}
-
-class _PostsScreenState extends State<PostsScreen> {
-  final AdminServices adminServices = AdminServices();
-
-  @override
-  void initState() {
-    super.initState();
-    Provider.of<AdminProvider>(context, listen: false)
-        .fetchAllProducts(context);
-  }
-
-  void navigateToAddProduct() {
-    Navigator.pushNamed(context, AddProductScreen.routeName);
-  }
-
-  @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<AdminProvider>(context, listen: false)
+          .fetchAllProducts(context);
+    });
+    void navigateToAddProduct() {
+      Provider.of<AdminProvider>(context, listen: false).isLoading = false;
+      Navigator.pushNamed(context, AddProductScreen.routeName);
+    }
+
     return Scaffold(
       body: Consumer<AdminProvider>(
         builder: (context, products, child) => products.products == null
-            ? const Loader()
+            ? const PostScreenShimmer()
             : GridView.builder(
                 itemCount: products.products!.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2),
                 itemBuilder: (context, index) {
                   final productData = products.products![index];
-                  return Column(
-                    children: [
-                      SizedBox(
-                        height: 140,
-                        child: SingleProduct(
-                          image: productData.images[0],
+                  return Padding(
+                    padding:
+                        const EdgeInsets.all(8.0).copyWith(bottom: 0, top: 0),
+                    child: Column(
+                      children: [
+                        kHeight5,
+                        SizedBox(
+                          height: 140,
+                          child: SingleProduct(
+                            image: productData.images[0],
+                          ),
                         ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              productData.name,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 12.0),
+                                child: Text(
+                                  productData.name,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
+                                ),
+                              ),
                             ),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              products.deleteProduct(
-                                  productData, index, context);
-                            },
-                            icon: const Icon(
-                              Icons.delete_outline,
+                            IconButton(
+                              onPressed: () {
+                                products.deleteProduct(
+                                    productData, index, context);
+                              },
+                              icon: const Icon(
+                                Icons.delete_outline,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   );
                 },
               ),

@@ -1,19 +1,25 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/material.dart';
+import 'package:pay/pay.dart';
+import 'package:provider/provider.dart';
+
 import 'package:e_shoppie/common/custom_button.dart';
 import 'package:e_shoppie/core/global_variables.dart';
 import 'package:e_shoppie/core/sizedboxes.dart';
 import 'package:e_shoppie/core/utils.dart';
 import 'package:e_shoppie/providers/user_provider.dart';
 import 'package:e_shoppie/views/home/widgets/addres_box.dart';
-import 'package:flutter/material.dart';
-import 'package:pay/pay.dart';
-import 'package:provider/provider.dart';
+
 import '../../../common/custom_textfeild.dart';
 import '../services/address_Services.dart';
 
 class Addrresscreen extends StatelessWidget {
   static const String routeName = '/address';
+  Addrresscreen({
+    Key? key,
+    required this.totalAmount,
+  }) : super(key: key);
   final String totalAmount;
-  Addrresscreen({super.key, required this.totalAmount});
 
   final TextEditingController flatBuildingController = TextEditingController();
 
