@@ -1,4 +1,3 @@
-import 'package:e_shoppie/core/colors.dart';
 import 'package:e_shoppie/core/sizedboxes.dart';
 import 'package:e_shoppie/providers/home/home_provider.dart';
 import 'package:e_shoppie/views/home/shimmer/deal_of_day.dart';

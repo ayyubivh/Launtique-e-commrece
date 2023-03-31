@@ -1,7 +1,9 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:badges/badges.dart';
+import 'package:e_shoppie/common/nointernet.dart';
 import 'package:e_shoppie/core/colors.dart';
 import 'package:e_shoppie/providers/bottombar/bottom_bar_provider.dart';
+import 'package:e_shoppie/providers/network/network_provider.dart';
 import 'package:e_shoppie/views/cart/screens/cart_screens.dart';
 import 'package:e_shoppie/providers/user_provider.dart';
 import 'package:flutter/material.dart';
@@ -26,9 +28,11 @@ class BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userCartLen = context.watch<UserProvider>().user.cart.length;
-    return Consumer<BottomBarProvider>(
-      builder: (context, value, child) => Scaffold(
-          body: pages[value.page],
+    return Consumer2<BottomBarProvider, NetworkStatus>(
+      builder: (context, value, network, child) => Scaffold(
+          body: network == NetworkStatus.online
+              ? pages[value.page]
+              : const Connectionfailed(),
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: value.page,
             selectedItemColor: Colors.blueGrey,

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_shoppie/core/colors.dart';
 import 'package:e_shoppie/core/sizedboxes.dart';
 import 'package:e_shoppie/providers/home/home_provider.dart';
@@ -50,7 +51,6 @@ class CategoryDealsScreen extends StatelessWidget {
                   children: [
                     kHeight10,
                     Container(
-                      height: 50,
                       width: double.infinity,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 5),
@@ -67,13 +67,16 @@ class CategoryDealsScreen extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: MasonryGridView.count(
-                        mainAxisSpacing: 15,
-                        shrinkWrap: true,
+                      child: GridView.builder(
+                        scrollDirection: Axis.vertical,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                mainAxisSpacing: 10,
+                                crossAxisSpacing: 5),
                         physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 15,
                         itemCount: value.productList!.length,
                         itemBuilder: (context, index) {
                           final product = value.productList![index];
@@ -97,73 +100,78 @@ class CategoryDealsScreen extends StatelessWidget {
     return GestureDetector(
       onTap: () => Navigator.pushNamed(context, ProductDetailScreen.routeName,
           arguments: product),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Container(
-              padding: const EdgeInsets.only(bottom: 10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: kwhite,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.blueGrey.withOpacity(0.5),
-                    offset: const Offset(4, 4),
-                    blurRadius: 10,
-                  ),
-                ],
+      child: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: Container(
+          padding: const EdgeInsets.only(bottom: 10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(18),
+            color: kwhite,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.blueGrey.withOpacity(0.5),
+                offset: const Offset(4, 4),
+                blurRadius: 10,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(20.28),
-                    child: Image.network(
-                      product.images[0],
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 8.0,
-                      right: 8.0,
-                      top: 10.0,
-                    ),
-                    child: Text(
-                      product.name.toUpperCase(),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black54,
-                      ),
-                    ),
-                  ),
-                  kHeight5,
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 8.0,
-                      right: 8.0,
-                    ),
-                    child: Container(
-                      padding: const EdgeInsets.all(4),
-                      height: 24,
-                      color: GlobalVariables.appBarColor,
-                      child: Text(
-                        "\$ ${product.price}",
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: CachedNetworkImage(
+                  // height: 280,
+                  imageUrl: product.images[0],
+                  imageBuilder: (context, imageProvider) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.0),
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.fitHeight,
                         ),
                       ),
+                    );
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 8.0,
+                  right: 8.0,
+                  top: 10.0,
+                ),
+                child: Text(
+                  product.name.toUpperCase(),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black54,
+                  ),
+                ),
+              ),
+              kHeight5,
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 8.0,
+                  right: 8.0,
+                ),
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  height: 24,
+                  color: GlobalVariables.appBarColor,
+                  child: Text(
+                    "\$ ${product.price}",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
-          )
-        ],
+            ],
+          ),
+        ),
       ),
     );
   }

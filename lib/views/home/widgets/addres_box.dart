@@ -13,8 +13,15 @@ class AddressBox extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: kwhite,
         borderRadius: BorderRadius.circular(20),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.blueGrey.withOpacity(0.5),
+            offset: const Offset(4, 4),
+            blurRadius: 10,
+          ),
+        ],
       ),
       height: 120,
       child: Row(

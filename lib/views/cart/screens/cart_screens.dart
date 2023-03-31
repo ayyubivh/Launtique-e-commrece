@@ -51,7 +51,6 @@ class CartScreen extends StatelessWidget {
             ),
           ),
         ),
-        backgroundColor: Colors.grey[200],
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -74,8 +73,21 @@ class CartScreen extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 6.0),
-                          child: CartProduct(
-                            index: index,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.blueGrey.withOpacity(0.5),
+                                  offset: const Offset(4, 4),
+                                  blurRadius: 10,
+                                ),
+                              ],
+                            ),
+                            child: CartProduct(
+                              index: index,
+                            ),
                           ),
                         );
                       },

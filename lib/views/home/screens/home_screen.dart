@@ -1,5 +1,7 @@
 import 'package:e_shoppie/common/serch_textform.dart';
+import 'package:e_shoppie/providers/network/network_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../core/global_variables.dart';
 import '../../search/screens/search_screen.dart';
 import '../widgets/carousel_images.dart';

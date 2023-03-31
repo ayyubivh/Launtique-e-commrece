@@ -70,9 +70,7 @@ class _OrderViewState extends State<OrderView> {
                       maxLines: 2,
                     ),
                   ),
-                  // kHeight15,
                   Row(
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
                         width: 200,

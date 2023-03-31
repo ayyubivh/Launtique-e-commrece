@@ -9,17 +9,13 @@ class CategoryDealsShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MasonryGridView.count(
-      mainAxisSpacing: 15,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
       padding: const EdgeInsets.symmetric(vertical: 10),
       crossAxisCount: 2,
       crossAxisSpacing: 15,
       itemCount: 10,
-      itemBuilder: (context, index) => ShimmerWidget.rectangle(
-        height: 220,
+      itemBuilder: (context, index) => const ShimmerWidget.borderRectangle(
+        height: 160,
         width: 100,
-        radius: BorderRadius.circular(20),
       ),
     );
   }
