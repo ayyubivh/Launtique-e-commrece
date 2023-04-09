@@ -1,5 +1,4 @@
 import 'package:e_shoppie/core/colors.dart';
-import 'package:e_shoppie/core/global_variables.dart';
 import 'package:flutter/material.dart';
 
 class SearchTextForm extends StatelessWidget {
@@ -8,56 +7,44 @@ class SearchTextForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 60,
-      color: GlobalVariables.appBarColor,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-            color: kwhite,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.6),
-                offset: const Offset(7, 7),
-                blurRadius: 10,
+    return SizedBox(
+      height: 45,
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          color: kwhite,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              offset: const Offset(-5, -5),
+              blurRadius: 10,
+            ),
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.4),
+              offset: const Offset(10, 10),
+              blurRadius: 10,
+            ),
+          ],
+        ),
+        child: TextFormField(
+          onFieldSubmitted: onFieldSubmit,
+          decoration: const InputDecoration(
+            border: InputBorder.none,
+            prefixIcon: Padding(
+              padding: EdgeInsets.only(
+                left: 6,
               ),
-            ],
-          ),
-          child: TextFormField(
-            onFieldSubmitted: onFieldSubmit,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              prefixIcon: const Padding(
-                padding: EdgeInsets.only(
-                  left: 6,
-                ),
-                child: Icon(
-                  Icons.search,
-                  color: Colors.black,
-                  size: 23,
-                ),
+              child: Icon(
+                Icons.search,
+                color: Colors.black,
+                size: 23,
               ),
-              filled: true,
-              focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  borderSide: const BorderSide(
-                    color: Colors.white,
-                  )),
-              enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  borderSide: const BorderSide(
-                    color: Colors.white,
-                  )),
-              fillColor: Colors.white,
-              contentPadding: const EdgeInsets.only(top: 10),
-              hintText: 'Search ',
-              hintStyle: const TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: 15,
-              ),
+            ),
+            hintText: 'Search ',
+            hintStyle: TextStyle(
+              fontWeight: FontWeight.w400,
+              fontSize: 15,
             ),
           ),
         ),

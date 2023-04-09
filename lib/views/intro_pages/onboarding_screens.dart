@@ -2,11 +2,16 @@ import 'package:e_shoppie/common/custom_button.dart';
 import 'package:e_shoppie/core/colors.dart';
 import 'package:e_shoppie/core/global_variables.dart';
 import 'package:e_shoppie/core/sizedboxes.dart';
+import 'package:e_shoppie/views/auth/screens/auth_screen.dart';
 import 'package:e_shoppie/views/intro_pages/widgets/image_listview.dart';
 import 'package:e_shoppie/views/intro_pages/widgets/indicators.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'widgets/onboard_page.dart';
 
 class IntroScreen extends StatefulWidget {
+  static const routeName = "/intro-page";
   const IntroScreen({super.key});
 
   @override
@@ -66,18 +71,18 @@ class _IntroScreenState extends State<IntroScreen> {
                   Text(
                     'Your Appearance \n Shows Your Quality',
                     style: TextStyle(
-                        fontSize: 30,
+                        fontSize: 27,
                         color: kblack,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
                         fontFamily: 'Lato'),
                     textAlign: TextAlign.center,
                   ),
                   Text(
                     'Change Quality of  Your \n Appearance with Launtique',
                     style: TextStyle(
-                        fontSize: 30,
+                        fontSize: 27,
                         color: kblack,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
                         fontFamily: 'Lato'),
                     textAlign: TextAlign.center,
                   ),
@@ -86,7 +91,7 @@ class _IntroScreenState extends State<IntroScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ...buildIndicators(),
+                      // ...buildIndicators(),
                     ],
                   )
                 ],
@@ -99,8 +104,14 @@ class _IntroScreenState extends State<IntroScreen> {
               right: 20,
               child: CustomButton(
                 color: GlobalVariables.primaryColor,
-                text: 'Sign In',
-                onTap: () {},
+                text: 'NEXT',
+                onTap: () {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const IntroductionSliders(),
+                      ));
+                },
               ))
         ],
       ),

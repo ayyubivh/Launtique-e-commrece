@@ -29,7 +29,7 @@ void main() {
     StreamProvider<NetworkStatus>(
       create: (context) =>
           NetworkStatusService().networkStatusController.stream,
-      initialData: NetworkStatus.offline,
+      initialData: NetworkStatus.online,
     ),
   ], child: const MyApp()));
 }

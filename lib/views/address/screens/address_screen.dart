@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:e_shoppie/views/address/widgets/payment_successfull_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:pay/pay.dart';
 import 'package:provider/provider.dart';
 
@@ -112,6 +114,10 @@ class Addrresscreen extends StatelessWidget {
         showSnackBar(context, 'ERROR');
       }
       onGooglePayResult(addressFromProvider);
+      Navigator.pushNamed(
+        context,
+        PaymentSuccess.routeName,
+      );
     }
 
     var address = context.watch<UserProvider>().user.address;

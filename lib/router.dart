@@ -2,10 +2,12 @@ import 'package:e_shoppie/common/bottom_bar.dart';
 import 'package:e_shoppie/models/orders.dart';
 import 'package:e_shoppie/models/product.dart';
 import 'package:e_shoppie/views/address/screens/address_screen.dart';
+import 'package:e_shoppie/views/address/widgets/payment_successfull_screen.dart';
 import 'package:e_shoppie/views/admin/screen/admin_sceeen.dart';
 import 'package:e_shoppie/views/auth/screens/auth_screen.dart';
 import 'package:e_shoppie/views/home/screens/category_deals.dart';
 import 'package:e_shoppie/views/home/screens/home_screen.dart';
+import 'package:e_shoppie/views/intro_pages/onboarding_screens.dart';
 import 'package:e_shoppie/views/order_details/screens/orderdetails.dart';
 import 'package:e_shoppie/views/product_details/screen/product_details.dart';
 import 'package:e_shoppie/views/search/screens/search_screen.dart';
@@ -29,10 +31,20 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
         builder: (_) => BottomBar(),
       );
+    case PaymentSuccess.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => const PaymentSuccess(),
+      );
     case AddProductScreen.routeName:
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_) => const AddProductScreen(),
+      );
+    case IntroScreen.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => const IntroScreen(),
       );
     case AdminScreen.routeName:
       return MaterialPageRoute(

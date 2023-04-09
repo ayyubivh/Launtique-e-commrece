@@ -21,3 +21,12 @@ Future<List<File>> pickImage() async {
   }
   return images;
 }
+
+class CustomDivider extends StatelessWidget {
+  const CustomDivider({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(height: 3, color: Colors.grey[300]);
+  }
+}

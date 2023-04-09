@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:e_shoppie/views/admin/screen/admin_sceeen.dart';
 import 'package:e_shoppie/views/auth/screens/auth_screen.dart';
+import 'package:e_shoppie/views/intro_pages/onboarding_screens.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../common/bottom_bar.dart';
@@ -30,7 +31,7 @@ class SplashProvider extends ChangeNotifier {
 
   //=-=-=-=-=-=-=-=-=-=-=-=-=-=AUTH CHECK-=-=-=-=-=-=-=-=-=-=-=-=-\\
   void splashTimer(BuildContext context) {
-    Timer(const Duration(seconds: 3), () async {
+    Timer(const Duration(seconds: 4), () async {
       Provider.of<UserProvider>(context, listen: false).user.token.isNotEmpty
           ? Provider.of<UserProvider>(context, listen: false).user.type ==
                   'user'
@@ -41,7 +42,7 @@ class SplashProvider extends ChangeNotifier {
                 )
           : Navigator.pushNamed(
               context,
-              AuthScreen.routeName,
+              IntroScreen.routeName,
             );
       notifyListeners();
     });

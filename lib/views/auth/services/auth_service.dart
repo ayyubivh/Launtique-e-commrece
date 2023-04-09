@@ -5,6 +5,7 @@ import 'package:e_shoppie/core/url.dart';
 import 'package:e_shoppie/core/utils.dart';
 import 'package:e_shoppie/models/user.dart';
 import 'package:e_shoppie/providers/user_provider.dart';
+import 'package:e_shoppie/views/intro_pages/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -87,10 +88,9 @@ class AuthService {
           Provider.of<UserProvider>(context, listen: false).setUser(res.body);
           await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
           // ignore: use_build_context_synchronously
-          Navigator.pushNamedAndRemoveUntil(
+          Navigator.push(
             context,
-            BottomBar.routeName,
-            (route) => false,
+            CustomPageRoute(child: BottomBar()),
           );
         },
       );

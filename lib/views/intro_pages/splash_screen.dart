@@ -22,6 +22,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     super.initState();
+    Provider.of<SplashProvider>(context, listen: false).splashTimer(context);
 
     authService.getUserData(context);
 
@@ -41,9 +42,6 @@ class _SplashScreenState extends State<SplashScreen>
     });
     Timer(const Duration(seconds: 4), () {
       Provider.of<SplashProvider>(context, listen: false).loadSizeChange();
-    });
-    Timer(const Duration(seconds: 2), () {
-      Provider.of<SplashProvider>(context, listen: false).splashTimer(context);
     });
   }
 
@@ -100,26 +98,20 @@ class _SplashScreenState extends State<SplashScreen>
   }
 }
 
-class PageTransition extends PageRouteBuilder {
-  final Widget page;
-
-  PageTransition(this.page)
+class CustomPageRoute extends PageRouteBuilder {
+  final Widget child;
+  CustomPageRoute({required this.child})
       : super(
-          pageBuilder: (context, animation, anotherAnimation) => page,
-          transitionDuration: const Duration(milliseconds: 2000),
-          transitionsBuilder: (context, animation, anotherAnimation, child) {
-            animation = CurvedAnimation(
-              curve: Curves.fastLinearToSlowEaseIn,
-              parent: animation,
-            );
-            return Align(
-              alignment: Alignment.bottomCenter,
-              child: SizeTransition(
-                sizeFactor: animation,
-                child: page,
-                axisAlignment: 0,
-              ),
-            );
-          },
-        );
+            transitionDuration: const Duration(milliseconds: 400),
+            reverseTransitionDuration: const Duration(milliseconds: 400),
+            pageBuilder: (context, animation, secondaryAnimation) => child);
+
+  @override
+  Widget buildTransitions(BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation, Widget child) =>
+      SlideTransition(
+        position: Tween(begin: const Offset(1, 0), end: Offset.zero)
+            .animate(animation),
+        child: child,
+      );
 }

@@ -1,4 +1,5 @@
 import 'package:e_shoppie/core/colors.dart';
+import 'package:e_shoppie/core/sizedboxes.dart';
 import 'package:flutter/material.dart';
 import '../../../core/global_variables.dart';
 import '../screens/category_deals.dart';
@@ -13,65 +14,55 @@ class Categories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return SizedBox(
+      height: 103,
       child: ListView.builder(
-        physics: const BouncingScrollPhysics(),
-        shrinkWrap: true,
         itemCount: GlobalVariables.categoryImages.length,
+        scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return InkWell(
+          return GestureDetector(
             onTap: () => navigateToCategoryPage(
               context,
               GlobalVariables.categoryImages[index]['title']!,
             ),
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 18.0, vertical: 12),
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white, width: 0.0),
-                  borderRadius: BorderRadius.circular(0),
-                  color: Colors.grey[200],
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.blueGrey.withOpacity(0.5),
-                      offset: const Offset(8, 8),
-                      blurRadius: 5,
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0, top: 5),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: kwhite,
+                      borderRadius: BorderRadius.circular(50),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.blueGrey.withOpacity(0.5),
+                          offset: const Offset(4, 4),
+                          blurRadius: 10,
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                height: 170,
-                // padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 19),
-                child: Stack(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(0),
-                          image: DecorationImage(
-                            image: AssetImage(
-                              GlobalVariables.categoryImages[index]['image']!,
-                            ),
-                            fit: BoxFit.cover,
-                          )),
-                    ),
-                    Positioned(
-                      left: 10,
-                      right: 10,
-                      bottom: 10,
-                      child: Text(
-                        "${GlobalVariables.categoryImages[index]['title']}",
-                        style: TextStyle(
-                            color: kwhite,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Lato',
-                            letterSpacing: 1),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: Image.asset(
+                        GlobalVariables.categoryImages[index]['image']!,
+                        fit: BoxFit.cover,
+                        height: 70,
+                        width: 70,
                       ),
-                    )
-                  ],
+                    ),
+                  ),
                 ),
-              ),
+                kHeight5,
+                Text(
+                  GlobalVariables.categoryImages[index]['title']!,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
           );
         },

@@ -1,5 +1,9 @@
 import 'package:e_shoppie/common/serch_textform.dart';
+import 'package:e_shoppie/core/colors.dart';
+import 'package:e_shoppie/core/sizedboxes.dart';
+import 'package:e_shoppie/core/utils.dart';
 import 'package:e_shoppie/providers/network/network_provider.dart';
+import 'package:e_shoppie/views/home/widgets/top_container.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../core/global_variables.dart';
@@ -14,40 +18,21 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void navigateToSearchScreen(String query) {
-      Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
-    }
-
-    return SafeArea(
-      child: Scaffold(
-        drawer: Container(),
-        appBar: AppBar(
-          iconTheme: const IconThemeData(color: Colors.blueGrey),
-          backgroundColor: GlobalVariables.appBarColor,
-          elevation: 0,
-          title: const Text(
-            'LAUNTIQUE',
-            style: TextStyle(
-              color: Colors.blueGrey,
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'Lato',
-              letterSpacing: 1,
-            ),
-          ),
-          centerTitle: true,
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              SearchTextForm(onFieldSubmit: navigateToSearchScreen),
-              const CarouselImage(),
-              const SizedBox(height: 10),
-              const SizedBox(height: 10),
-              const Categories(),
-              const DealOfDay(),
-            ],
-          ),
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: const [
+            TopContainer(),
+            kHeight15,
+            CarouselImage(),
+            kHeight5,
+            CustomDivider(),
+            kHeight5,
+            Categories(),
+            kHeight5,
+            CustomDivider(),
+            DealOfDay(),
+          ],
         ),
       ),
     );

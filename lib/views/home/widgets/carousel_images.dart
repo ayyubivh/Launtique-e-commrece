@@ -12,17 +12,20 @@ class CarouselImage extends StatelessWidget {
       items: GlobalVariables.carouselImages.map(
         (i) {
           return Builder(
-            builder: (BuildContext context) => Image.network(
-              i,
-              fit: BoxFit.cover,
-              height: 200,
+            builder: (BuildContext context) => Container(
+              margin: const EdgeInsets.all(6.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.0),
+                image:
+                    DecorationImage(image: NetworkImage(i), fit: BoxFit.cover),
+              ),
             ),
           );
         },
       ).toList(),
       options: CarouselOptions(
         viewportFraction: 0.9,
-        height: 200,
+        height: 180,
         enlargeCenterPage: true,
         autoPlay: true,
         aspectRatio: 16 / 9,
