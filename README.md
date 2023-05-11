@@ -23,7 +23,8 @@ A new Flutter project.
     - Changing Order Status
     - Viewing Total Earnings
     - Viewing Category Based Earnings (on Graph)
-
+## Screenshots
+![Screenshot]()
 ## Running Locally
 After cloning this repository, migrate to ```Launtique-e-commerce``` folder. Then, follow the following steps:
 - Create MongoDB Project & Cluster
