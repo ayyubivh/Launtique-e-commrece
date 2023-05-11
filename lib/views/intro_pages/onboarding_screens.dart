@@ -90,7 +90,7 @@ class _IntroScreenState extends State<IntroScreen> {
                   kHeight15,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: const [
                       // ...buildIndicators(),
                     ],
                   )

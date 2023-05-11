@@ -92,7 +92,7 @@ class AdminServices {
     return productList;
   }
 
-//Delete product
+  //Delete product
   void deletProduct({
     required BuildContext context,
     required Product product,

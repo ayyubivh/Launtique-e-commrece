@@ -52,10 +52,11 @@ class _IntroductionSlidersState extends State<IntroductionSliders> {
                   child: Text(
                     "Skip",
                     style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: kwhite,
-                        letterSpacing: 1),
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: kwhite,
+                      letterSpacing: 1,
+                    ),
                   ),
                 ),
                 Expanded(

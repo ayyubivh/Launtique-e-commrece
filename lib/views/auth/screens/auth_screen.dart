@@ -7,7 +7,6 @@ import 'package:e_shoppie/core/sizedboxes.dart';
 import 'package:e_shoppie/providers/auth/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../../providers/network/network_provider.dart';
 
 enum Auth {
