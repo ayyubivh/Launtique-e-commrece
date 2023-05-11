@@ -24,7 +24,8 @@ A new Flutter project.
     - Viewing Total Earnings
     - Viewing Category Based Earnings (on Graph)
 ## Screenshots
-![App Screenshot Banner](https://raw.github.com/ayyubivh/Launtique-e-commrece/blob/main/assets/images/app_screenshot_banner.png)
+![App Screenshot Banner](https://github.com/ayyubivh/Launtique-e-commrece/raw/main/assets/images/app_screenshot_banner.png)
+
 ## Running Locally
 After cloning this repository, migrate to ```Launtique-e-commerce``` folder. Then, follow the following steps:
 - Create MongoDB Project & Cluster
